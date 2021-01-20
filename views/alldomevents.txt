@@ -1,0 +1,24 @@
+id => data
+complete => question_type
+timer =>timer
+question =>question_statement
+id=1, value=option1 => option1
+id=2, value=option2 => option2
+id=3, value=option3 => option3
+id=4, value=option4 => option4
+
+handleClick()=>
+
+
+ this.question_id = q.question_id;
+this.question_statement = q.question_statement;
+this.correct_option = q.correct_option;
+this.serial_no = q.serial_no;
+this.question_timer = q.question_timer;
+this.max_points = q.max_points;
+this.options = q.options;
+
+this.option_id = args[0];
+this.option_statement = args[1];
+this.option_serial = args[2];
+this.option_counter = args[3];

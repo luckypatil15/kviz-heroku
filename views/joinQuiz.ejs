@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kviz</title>
+
+        <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
+        <link href="/assets/css/style.css" rel="stylesheet" />
+        <link href="/createquizee.css" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+        <link href="/assets/compheader.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/assets/css/Quizeeenterpin.css" />
+        <style>
+            body,
+            html {
+                height: 100%;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Position text in the middle of the page/image */
+
+            .bgg-text {
+                /* Fallback color */
+                /* Black w/opacity/see-through */
+                color: black;
+                position: absolute;
+                left: 30%;
+                z-index: 2;
+            }
+        </style>
+        <link href="/css/loader.css" rel="stylesheet" />
+        s
+        <!-- <script src="enterpin.js"></script> -->
+    </head>
+    <body onload="loadpage()">
+        <!-- navbar component-->
+        <%- include('partials/navbar') %>
+
+        <!--enter pin portion -->
+        <div class="container container-fluid">
+            <div class="row align-items-center justify-content-center" id="pin" style="height: 100vh">
+                <div class="col-3"></div>
+
+                <div class="col-6 d-flex align-items-center justify-content-center" style="height: 100vh">
+                    <div
+                        class="row form align-items-center justify-content-center"
+                        style="
+                            background-color: #ffac81;
+                            background-image: linear-gradient(315deg, #ffac81 0%, #ff928b 74%);
+                            height: 40vh;
+                            border-radius: 5px;
+                            border: 0.125rem solid rgb(204, 204, 204);
+                        "
+                    >
+                        <div>
+                            <div style="text-align: center">
+                                <span style="font-family: 'Potta One', cursive; color: rgb(255, 255, 255); margin: 30px; font-size: 70px; font-weight: 800">Kviz!</span>
+                            </div>
+                            <form>
+                                <input
+                                    type="text"
+                                    id="gamepin"
+                                    style="
+                                        height: 40px;
+                                        width: 200px;
+                                        border-radius: 5px;
+                                        border-radius: 5px;
+                                        box-shadow: 0 3px 7px rgb(34, 33, 33);
+                                        padding: 20px;
+                                        font-weight: 700;
+                                        border: 0.125rem solid rgb(204, 204, 204);
+                                        margin-bottom: 0.625rem;
+                                        text-align: center;
+                                        font-size: 1.25rem;
+                                    "
+                                    placeholder="Game Pin"
+                                />
+
+                                <div>
+                                    <button
+                                        type="submit"
+                                        value="Submit"
+                                        id="gamepinbtn"
+                                        onclick="onhandlesubmit(event)"
+                                        style="
+                                            height: 40px;
+                                            border-radius: 5px;
+                                            font-size: 20px;
+                                            font-weight: 700;
+                                            color: rgb(255, 255, 255);
+                                            background-color: rgb(51, 51, 51);
+                                            box-shadow: 0 3px 7px rgb(34, 33, 33);
+                                            width: 200px;
+                                            margin-bottom: 0.625rem;
+                                            text-align: center;
+                                            font-size: 1.25rem;
+                                        "
+                                    >
+                                        Enter
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 bg-success"></div>
+            </div>
+        </div>
+
+        <!-- join quiz portion -->
+        Waiting for players to join the room
+        <div class="container shadow mt-5" id="player_waiting_room">
+            Waiting for players to join the room
+            <div class="row flex-wrap mb-1">
+                <div class="col mt-3 ml-2 mb-1" id="player">
+                    <div class="card shadow mt-2 ml-2" style="width: 8rem; height: 12rem">
+                        <img src="/sample.jpeg" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h6 class="card-title" id="player_name">laxman patil</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- NEW QUESTION DISPLAY BLOCK-->
+        <div class="container mt-2" id="questions" style="margin-top: 500px">
+            <div class="d-flex mt-5 justify-content-center row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                                <div id="complete">MCQ Quiz</div>
+                                <span><h3 id="timer"></h3> </span>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom" id="main_frame" style="visibility: visible">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q.</h3>
+                                <h5 class="mt-1 ml-2" id="question">Which of the following country has largest population?</h5>
+                            </div>
+
+                            <div id="question_type">
+                                <div class="ans ml-2">
+                                    <div id="1" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary" role="alert">
+                                        This is a primary alert—check it out!
+                                    </div>
+                                </div>
+
+                                <div class="ans ml-2">
+                                    <div id="2" name="" value="" onclick="handleClick(this)" class="alert alert-primary" role="alert">This is a primary alert—check it out!</div>
+                                </div>
+
+                                <div class="ans ml-2">
+                                    <div id="3" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary" role="alert">
+                                        This is a primary alert—check it out!
+                                    </div>
+                                </div>
+
+                                <div class="ans ml-2">
+                                    <div id="4" name="" value="" onclick="handleClick(this)" class="alert alert-primary" role="alert">This is a primary alert—check it out!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
+                            <button class="btn btn-primary d-flex align-items-center btn-danger" type="button" id="status">&nbsp;question status</button
+                            ><button class="btn btn-primary border-success align-items-center btn-success" id="attempted" type="button">
+                                score : <i class="fa fa-angle-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fill type question -->
+        <div id="filling" style="visibility: hidden">
+            <input type="text" id="fill" maxlength="7" />
+            <button onclick="handlefillAnswer(this)">next question</button>
+        </div>
+
+        <!-- modal for starting quiz in 5sec timer -->
+        <button type="button" id="modal_open" style="visibility: hidden" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"><h1 id="temp_timer"></h1></div>
+                    <div class="modal-footer">
+                        <button type="button" id="modal_close" class="btn btn-secondary" data-dismiss="modal"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- leaderboard code -->
+        <div class="container-fluid" id="leaderboard">
+            <div class="bg-image"></div>
+            <!-- <div class="row bg-primary  justify-content-start  d-flex sticky-top" style="height: 50px;">
+                <div class="col-1  justify-content-center align-items-center d-flex">asdas</div>
+                <div class="col-5  d-flex"></div>
+                <div class="col-2  d-flex"></div>
+                <div class="col-2 bg-warning  justify-content-center align-items-center text-center d-flex">
+      <div >adsa</div>
+      
+                </div>
+                <div class="col-1 d-flex align-items-center "><div style="border:2px solid black;padding: 3px;border-radius: 3px;">adsdsd</div></div>
+                </div> -->
+            <header class="sticky-top">
+                <div class="row bg-dark d-flex align-items-center justify-content-between" style="height: 50px">
+                    <div
+                        class="col-1 justify-content-md-center d-flex"
+                        id="myrank"
+                        style="color: white; margin-left: 20px; border: 2px solid black; padding: 5px; border-radius: 8px"
+                    >
+                        3/10<i style="color: #ffd56b" class="f51e"></i>
+                    </div>
+                    <div class="col-2 d-flex justify-content-end" style="margin-right: 20px">
+                        <div class="justify-content-md-center d-flex" style="color: white; border: 2px solid black; padding: 5px; border-radius: 8px; width: 90px" id="myname">
+                            first
+                        </div>
+                        <div
+                            id="mymarks"
+                            class="justify-content-md-center d-flex"
+                            style="margin-left: 20px; border: 2px solid black; padding: 5px; border-radius: 8px; width: 90px; color: white"
+                        >
+                            1600 <i style="color: #ffd56b" class="fas fa-coins"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="d-flex text-center text-white bgg-text">
+                <div class="cover-container d-flex justify-content-center align-items-center w-100 p-3 mx-auto flex-column" style="height: 90vh">
+                    <div>
+                        <div class="row" style="width: 500px">
+                            <div class="col" id="list">
+                                <main class="px-3 row d-flex mt-1 h-50 bg-success justify-content-center align-items-center rounded-2" style="opacity: 0.7; font-weight: bolder">
+                                    <div class="col-4 justify-content-start d-flex">Rank</div>
+                                    <div class="col-4">Name</div>
+                                    <div class="col-4 justify-content-end d-flex">Score</div>
+                                </main>
+                                <div id="dummy_list"></div>
+                                <main
+                                    id="rank_box"
+                                    class="px-3 bg-light text-dark mt-1 h-50 row d-flex justify-content-center align-items-center rounded-2"
+                                    style="display: none !important; background-color: transparent; font-weight: bolder"
+                                >
+                                    <div class="col-4 justify-content-start d-flex" id="rank">1</div>
+
+                                    <div class="col-4" id="player_name">aks</div>
+                                    <div class="col-4 justify-content-end d-flex" id="totalMarks">10032</div>
+                                </main>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <footer class="mt-auto text-white-50">
+          <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+        </footer>
+      </div> -->
+            </div>
+        </div>
+
+        <!-- loader code -->
+        <div class="container" id="spinner">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="loader">
+                        <div class="loader-inner">
+                            <div class="loading one"></div>
+                        </div>
+                        <div class="loader-inner">
+                            <div class="loading two"></div>
+                        </div>
+                        <div class="loader-inner">
+                            <div class="loading three"></div>
+                        </div>
+                        <div class="loader-inner">
+                            <div class="loading four"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // gloabl variables
+        let socket = io.connect('/');
+        let fullname = '<%=profile.fullname%>';
+        let currect_question_id = 0;
+        let gamepin = 0;
+        let index = 0;
+        let resp_sent = false;
+        let timer_done = false;
+        let server_is_submitted = undefined;
+        let userid = '<%=profile.userid%>';
+
+        let joined = false;
+        socket.on('connect', () => {
+            console.log('connected to server');
+        });
+
+        socket.emit('whoami', function (message) {
+            console.log(message);
+        });
+
+        async function onhandlesubmit(e) {
+            e.preventDefault();
+            gamepin = document.getElementById('gamepin').value;
+            console.log(gamepin);
+            socket.emit('join', { roompin: gamepin, username: fullname }, (response) => {
+                console.log(response);
+            });
+        }
+
+        socket.on('newMessage', function (message) {
+            console.log(message);
+        });
+        /* ready in 5seconds event */
+        socket.on('ready_in_5', function (ready) {
+            ready_in_5sec(ready);
+        });
+
+        socket.on('player_joined', function (player, playersInfo) {
+            if (joined) {
+                new_player_joined(player);
+            } else {
+                renderlist(playersInfo);
+                joined = true;
+            }
+
+            console.log(player);
+        });
+        socket.on('questions', function (question) {
+            resp_sent = false;
+            loadQuestion(question);
+        });
+        socket.on('roomUsers', function (message) {
+            console.log('roomUsers', message);
+        });
+        socket.on('leaderboard', function ({ leaderBoardArray }) {
+            console.log('this is leader board', leaderBoardArray);
+            if (server_is_submitted == undefined) {
+                leaderboard(leaderBoardArray);
+            } else {
+                response_status(); //nodal co
+                leaderboard(leaderBoardArray);
+            }
+        });
+        socket.on('timer', function (counter) {
+            if (counter == 0) {
+                timer_done = true;
+            }
+            update_timer(counter);
+        });
+        socket.on('nextQuestion', function (message) {
+            console.log('timer', message);
+        });
+
+        socket.on('disconnect', function () {
+            // console.log("disconnected from server");
+        });
+
+        function new_player_joined(player) {
+            $('#pin').hide();
+            $('#player_waiting_room').show();
+            var player_list = $('#player_waiting_room').children();
+            var newPlayer = $('#player').clone();
+            var name = newPlayer.children().children('.card-body').children();
+            console.log(name);
+            name.html(player.player_name);
+            player_list.append(newPlayer);
+        }
+
+        function renderlist(playersInfo) {
+            $('#pin').hide();
+            $('#player_waiting_room').show();
+            for (let i = 0; i < playersInfo.length; i++) {
+                console.log(playersInfo[i]);
+                let player_list = $('#player_waiting_room').children();
+                let newPlayer = $('#player').clone();
+                let name = newPlayer.children().children('.card-body').children();
+                name.html(playersInfo[i]);
+                player_list.append(newPlayer);
+            }
+        }
+
+        function loadpage() {
+            $('#questions').hide();
+            $('#player_waiting_room').hide();
+            $('#leaderboard').hide();
+            $('#spinner').hide();
+        }
+
+        function loadQuestion({ question }) {
+            $('#player_waiting_room').hide();
+            console.log('options array', question.options);
+            currect_question_id = question.question_id;
+
+            $('#question').html(question.question_statement); //statement
+            $('#1').attr('class', 'alert alert-primary');
+            $('#1').html(question.options[0].option_statement); //options
+            $('#1').attr('value', question.options[0].option_id);
+
+            $('#2').attr('class', 'alert alert-primary');
+            $('#2').html(question.options[1].option_statement);
+            $('#2').attr('value', question.options[1].option_id);
+
+            $('#3').attr('class', 'alert alert-primary');
+            $('#3').html(question.options[2].option_statement);
+            $('#3').attr('value', question.options[2].option_id);
+
+            $('#4').attr('class', 'alert alert-primary');
+            $('#4').html(question.options[3].option_statement);
+            $('#4').attr('value', question.options[3].option_id);
+            $('#questions').show();
+        }
+
+        function update_timer(counter) {
+            $('#timer').html(counter);
+        }
+
+        function convertSeconds(s) {
+            var hour = Math.floor(s / 3600);
+            var minute = Math.floor(s / 60);
+            var second = s % 60;
+            return (
+                minute.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) +
+                ':' +
+                second.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
+            );
+        }
+
+        function ready_in_5sec(ready) {
+            $('#exampleModalLabel').html(ready);
+            let counter = 4;
+            $('#modal_open').click();
+            let interval = setInterval(() => {
+                $('#temp_timer').html(counter);
+                if (counter < 0) {
+                    clearInterval(interval);
+                    $('#modal_close').click();
+                }
+                counter--;
+            }, 900);
+        }
+
+        function handleClick(e) {
+            if (resp_sent == false) {
+                console.log(e.target);
+                console.log(e, e.value);
+                e.setAttribute('class', 'alert alert-success bg-primary');
+                var statement = $(e).html();
+                var resp_id = e.getAttribute('value');
+                console.log(resp_id);
+                var timer = $('#timer').html();
+                let response = {
+                    option_id: resp_id,
+                    timer: timer,
+                    question_id: currect_question_id,
+                    roompin: gamepin,
+                    responseStatement: statement,
+                };
+                setTimeout(() => {
+                    $('#questions').hide();
+                    $('#leaderboard').hide();
+                    $('#spinner').show();
+                    socket.emit('response', response, (callback) => {
+                        server_is_submitted = callback;
+                        resp_sent = true;
+                    });
+                }, 1000);
+
+                console.log($(e).html());
+            }
+        }
+
+        function response_status() {
+            $('#questions').css('display', 'none');
+            let msg = '';
+            if (server_is_submitted.status && server_is_submitted.is_correct) {
+                msg = 'congrats your answer is correct';
+            } else if (server_is_submitted.status && server_is_submitted.is_correct === false) {
+                msg = 'sorry your answer is incorrect better luck next time';
+            } else if (server_is_submitted.status === false) {
+                msg = "Time's up try harder and in time respose";
+            }
+            $('#exampleModalLabel').html(msg);
+            $('#modal_open').click();
+            setTimeout(() => {
+                $('#modal_close').click();
+            }, 2000);
+        }
+
+        function leaderboard(leader_array) {
+            $('#spinner').hide();
+            let list = $('#list');
+            list.children('#dummy_list').children().remove();
+            let dlist = $('#dummy_list');
+
+            for (let i = 0; i < leader_array.length; i++) {
+                if (userid == leader_array[i].player_id) {
+                    $('#myrank').html(i + 1);
+                    $('#myname').html(leader_array[i].player_name);
+                    $('#mymarks').html(leader_array[i].totalMarks);
+                }
+                let position = $('#rank_box').clone();
+                position.css('display', 'block');
+                position.children('#rank').html(i + 1);
+                position.children('#player_name').html(leader_array[i].player_name);
+                position.children('#totalMarks').html(leader_array[i].totalMarks);
+
+                dlist.append(position);
+            }
+            $('#leaderboard').css('display', 'block');
+            server_is_submitted = {};
+        }
+    </script>
+</html>
