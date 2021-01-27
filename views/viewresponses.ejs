@@ -60,32 +60,61 @@
         body {
             margin: 80px;
         }
+        .bg-image {
+                content: '';
+                /* The image used */
+
+                /* Add the blur effect */
+
+                /* Full height */
+
+                /* Center and scale the image nicely */
+                background-image: url(/assets/img/bg/bgQuestion.jpg);
+                background-position: center;
+                background-size: cover;
+                background-repeat: repeat-y;
+            }
     </style>
 </head>
-  <body class="text-center bg-light" >
+  <body class="text-center bg-light bg-image" >
      <!--NAV-BAR-->
     <%- include('partials/navbar') %>
 
     <main class="form-signin">
-        <div>
-            <img src="/assets/spider.png" style="height: 40%; width:55%; object-fit: cover; border-radius: 60%;" /><br><br>
-            <h1 class="h3 mb-3 fw-normal"><%= fullname.fullname%></h1>
+        <div>  <% if (profile.user_image == null || profile.user_image == '' || profile.user_image == undefined) { %>
+            <img
+                onclick="callModal()"
+                src="/assets/img/team-placeholder.png"
+                id="profileImage"
+                style="height: 25vh; width: 11vw"
+                class="rounded-circle"
+            />
+            <% } else { %>
+            <img
+                onclick="callModal()"
+                id="profileImage"
+                src="/assets/img/<%=profile.user_image%>"
+                style="height: 26vh; width: 10.5vw"
+                class="rounded-circle"
+            />
+            <%}%><br><br>
+            <h1 class="h3 mb-3 fw-normal text-light"><%= fullname.fullname%></h1>
           
     
-            <div class="progress" style="height: 25px;" >
+            <div class="progress text-light" style="height: 25px;" >
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                  aria-valuenow= "<%= Math.floor((results.total_correct/results.questions.length)*100)%>" 
                  aria-valuemin="0" aria-valuemax="100" 
                  style="width: <%= Math.floor((results.total_correct/results.questions.length)*100)%>%"> Accuracy :<%= Math.floor((results.total_correct/results.questions.length)*100)%>%</div>
               </div><br>
-              <h3>Quiz name :</h3> 
-              <h5 class=" mb-3 fw-normal"><%= results.name%></h5>
+              <h3 class="text-light">Quiz name :</h3> 
+              <h5 class=" mb-3 fw-normal text-light"><%= results.name%></h5>
               <div class="row mt-3 p-2" >
     
                 <div class="col-2">
     
                 </div>
-                <div class="col-12  mt-3 " id="tabin"   >
+                <div class="col-12  mt-3 bg-light " id="tabin"   >
     <table class="m-4" >
         <tr>
             <td>Total Question:</td>

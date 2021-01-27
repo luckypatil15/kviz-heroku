@@ -43,7 +43,11 @@ module.exports = function(sequelize, DataTypes) {
     activestatus: {
       type: DataTypes.TINYINT,
       allowNull: true
-    }
+    },
+    user_image: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'users',

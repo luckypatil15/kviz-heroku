@@ -14,6 +14,11 @@ const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+var multer = require('multer');
+const exportUsersToExcel = require('./models1/exportService');
+const helpers = require('./controllers/helpers')
+const storage = require('./controllers/storageImg')
+let upload = multer({ storage: storage, fileFilter: helpers.imageFilter });
 
 //require js file from other folders to use their function
 
@@ -44,18 +49,28 @@ const paymentSuccessRouter = require('./routes/paymentSuccessRoute.js');
 const paymentSuccess1Router = require('./routes/paymentSuccess1Route.js')
 const joinQuizRouter = require('./routes/joinQuizRoute.js');
 const addResponseRouter = require('./routes/addResponseRouter');
+const deletequestionRouter = require('./routes/deletequestionRouter');
+const getQuestionsRouter = require('./routes/getQuestionsRouter');
+const joinquizRouter = require('./routes/joinQuizRoute');
+const editQuestionRouter = require('./routes/editquestionRouter')
+const uploadProfileImageRouter = require('./routes/uploadProfileImageRouter')
+const uploadQuizImageRouter = require('./routes/uploadQuizImageRouter');
+const uploadQestionImageRouter = require('./routes/uploadQestionImageRouter');
+
 const viewResponseRouter = require('./routes/viewResponseRoute')
 const downloadRouter = require('./routes/downloadRoute');
 const { Question, Option, Player, Quiz, Game, Mcq , Fill, Poll } = require('./models1/class');
 const { getQuizByid } = require('./models1/getquiz');
 const { insert_response } = require('./models1/dbresponses');
+const hostingRouter = require('./routes/hostingRoute');
+const viewliveResponseRouter = require('./routes/viewliveResponseRoute');
 let games = new Map();
 
 /*                                                                              
 MIDDLEWARE STACK
 
 */
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');//embedded javascript
 app.use(cors());
 passport.use(new LocalStrategy({ usernameField: 'email' }, LocalStrategyCallback));
 
@@ -136,13 +151,22 @@ app.use('/api/v1/createQuiz', createQuizRouter);
 app.use('/api/v1/doneQuiz', doneQuizRouter);
 app.use('/api/v1/profile', profileRouter); ///api/v1/premium
 app.use('/api/v1/premium', premiumRouter);
-app.use("/api/v1/editprofile",editprofileRouter);
+app.use("/api/v1/editprofile", editprofileRouter);
 app.use("/api/v1/paymentsuccess",paymentSuccessRouter);
 app.use("/api/v1/paymentsuccess1",paymentSuccess1Router);
-app.use("/api/v1/joinquiz",joinQuizRouter);
-app.use('/api/v1/addResponse',addResponseRouter);
+app.use("/api/v1/joinquiz", joinQuizRouter);
+app.use('/api/v1/insertResponse',addResponseRouter);
+app.use('/api/v1/deletequestion', deletequestionRouter);
+app.use('/api/v1/getquestions', getQuestionsRouter);
+app.use('/api/v1/editquestion', editQuestionRouter);
+app.use('/api/v1/upload_profile_image', upload.single('profile_image'), uploadProfileImageRouter);
+app.use('/api/v1/upload_quiz_image', upload.single('quiz_image'), uploadQuizImageRouter);
+app.use('/api/v1/upload_question_image', upload.single('question_image'), uploadQestionImageRouter);
+
 app.use('/api/v1/viewResponses',viewResponseRouter);//viewResponses
 app.use('/api/v1/download',downloadRouter);
+app.use('/api/v1/preparetohost',hostingRouter);
+app.use('/api/v1/viewliveResponse',viewliveResponseRouter);
 const io = require('socket.io')(server);
 
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
@@ -174,7 +198,7 @@ io.on('connection', (socket) => {
     socket.on('generatePin', async (quiz_id, callback) => {
         //console.log('generating pin');
         let questionList = await getQuizByid(quiz_id);
-        
+        console.log(quiz_id,questionList)
         gamepin = Math.floor(Math.random() * 100000);
 
         let game = new Game();
@@ -183,7 +207,9 @@ io.on('connection', (socket) => {
         game.game_pin = gamepin;
         game.questions = questionList;
         game.players = new Map();
+        game.is_started = false;
         games.set(gamepin.toString(), game);
+
        // console.log(io.sockets.socket);
         //games.push(game);
 
@@ -196,11 +222,6 @@ io.on('connection', (socket) => {
         });
     });
     socket.on('join', async ({ roompin, username }, callback) => {
-        //fetch data from
-       // console.log('in join socket');
-        //console.log(games);
-       // console.log()
-       
         io.to(roompin).emit('newMessage','player is connected');
         let player = new Player();
         player.player_id = socket.request.session.userid;
@@ -213,7 +234,7 @@ io.on('connection', (socket) => {
         let game = await games.get(roompin.toString());
 
         if (game === undefined) {
-            socket.emit('newMessage', 'invalid game code');
+            socket.emit('error', 'invalid game code');
         } else {
             game.players.set(player.socket_id.toString(), player);
         }
@@ -237,7 +258,8 @@ io.on('connection', (socket) => {
             currentlyJoinedplayer: player.player_name,
             playersInfo: playersInfo,
         });
-        io.to(roompin).emit('player_joined', player,playersInfo);
+
+        io.to(roompin).emit('player_joined', player,playersInfo,game.is_started);
         socket.request.session.currentgame = roompin;
 
         socket.request.session.save();
@@ -251,7 +273,7 @@ io.on('connection', (socket) => {
         if (games.has(roompin)) {
             let game = games.get(roompin);
           //  console.log(game);
-            if (socket.request.session.userid === game.Host_id) {
+            if (socket.request.session.userid == game.Host_id) {
                 let question_index = 0;
                 let question = game.questions[question_index];
 
@@ -259,16 +281,17 @@ io.on('connection', (socket) => {
                     question_index++;
                     if (question.serial_no === 1) return question;
                 }); */
-                // const question_index = questions_array.findIndex((question) => question.serial_no === 1);
-
-                socket.emit('newMessage', 'Welcome to openTrivia');
-
+                // const question_index = questions_array.findIndex((question) => question.serial_no === 1); 
+                socket.emit('starting', 'Welcome to openTrivia');
+                game.is_started = true;
                 // Broadcast when a user connects
-                socket.broadcast.to(roompin).emit('ready_in_5', `ready to start the game in 5 seconds`);
-
+               // socket.broadcast.to(roompin).emit('ready_in_5', `ready to start the game in 5 seconds`);
+               socket.broadcast.to(roompin).emit('ready_in_5', `Ready to start the game in 5 seconds`);
+               
                 // Send users and room info
                 await setTimeout(() => {
                     game.running_question_index = question_index;
+                    console.log('inside starting',question)
                     io.to(roompin).emit('questions', {
                         question: question,
                     });
@@ -309,7 +332,7 @@ io.on('connection', (socket) => {
 
         // Welcome current user
     });
-    socket.on('response', async ({ roompin, ...rest },callback) => {
+    socket.on('response', async ({ roompin, ...rest },callback) => {    
         console.log("inside rest",rest);
         if (roompin === socket.request.session.currentgame) {
             if (games.has(roompin)) {
@@ -332,10 +355,12 @@ io.on('connection', (socket) => {
                                     rest['participant_id'] = player.player_id;
                                     rest['response_time'] = question.question_timer - rest.timer;
                                     console.log('pushed into response array');
-                                    player.responses.push(rest);
                                     if(earns_point != 0){
-                                            correct = true;
+                                        correct = true;
                                     }
+                                    rest['is_correct']=correct;
+                                    player.responses.push(rest);
+                                    
                                         callback({
                                             status : true ,
                                             msg:"your response submitted succesffuly",
@@ -440,9 +465,10 @@ io.on('connection', (socket) => {
                     emitserverTimer(question.question_timer, roompin);
                 } else {
                     let leaderBoardArray = game.sortByPlayerMarks();
+                    console.log(leaderBoardArray);
                     io.to(roompin).emit('finalleaderboard', {
-                        leaderBoardArray,
-                    });
+                        leaderBoardArray
+                    },game.quiz_id);
                     for (const [key, value] of game.players.entries()) {
                         value.responses.forEach(async (response) => {
                             await insert_response(response);

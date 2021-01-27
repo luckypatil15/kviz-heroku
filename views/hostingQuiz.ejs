@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+        <link href="/css/loader.css" rel="stylesheet" />
+        <title>Hello, world!</title>
+        <link href="/assets/css/style.css" rel="stylesheet" />
+        <link href="/assets/compheader.css" rel="stylesheet" />
+    </head>
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+        /* Position text in the middle of the page/image */
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        /* img {
+            height: 300px;
+            width: 300px;
+        } */
+    </style>
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        /* .btn:hover {
+            color: white;
+        } */
+        .bg-image {
+            /* The image used */
+            background-image: url('/assets/img/bg/bgQuestion.jpg');
+            background-repeat: repeat-y;
+            /* Add the blur effect */
+            /* filter: blur(8px);
+            -webkit-filter: blur(8px); */
+            /* Full height */
+            height: 100%;
+            /* Center and scale the image nicely */
+            background-position: center;
+            /* background-repeat: no-repeat; */
+            background-size: cover;
+        }
+        /* Position text in the middle of the page/image */
+
+        .bgg-text {
+            /* Fallback color */
+            /* Black w/opacity/see-through */
+            /*color: black;
+            */
+            position: absolute;
+            left: 30%;
+            z-index: 2;
+        }
+        #pin:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    <body onload="loadingpage()" class="bg-image">
+        <!--NAV-BAR-->
+        <%- include('partials/navbar') %>
+
+        <!-- hosting container -->
+        <div class="container" id="hosting_container" style="margin-top: 100px">
+            <div class="row mt-5 flex-wrap justify-content-center align-items-center">
+                <div class="col-md-6 shadow-lg col-sm-12 pb-sm-3">
+                    <div class="card mb-6">
+                        <img class="card-img-top" src="/img/a1.jpg" alt="Card image cap" />
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Host</h4>
+                            <p class="card-text">Hosting quiz enables you to play live Game and let players to join live multiplayer enviornment</p>
+                            <a onclick="onhandlesubmit(event)" class="btn btn-outline-dark shadow-lg w-100 btn-md">Host</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 shadow-lg col-sm-12">
+                    <div class="card mb-6">
+                        <img class="card-img-top" src="/img/challenge.jpg" alt="Card image cap" />
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Challenge ( Offline Quiz )</h4>
+                            <p class="card-text">playing offline quizes poses your quiz as challenge to players and can be completed at their time</p>
+                            <a href="/api/v1/offlineQuiz" class="btn btn-outline-dark shadow-lg w-100 btn-md">challenge</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- waiting room  -->
+        <div class="container-fluid mt-5" style="margin-top: 100px !important" id="player_waiting_room">
+            <div class="row justify-content-center align-items-center">
+                <div class="row justify-content-center align-items-center text-dark fw-bold bg-info rounded-pill mb-3 fs-2" style="height: 3rem">
+                    Waiting for players to join the room gamepin to join is
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="text-center col-3 shadow-lg rounded-pill fw-bold bg-info text-dark fs-3">
+                    <span id="pin">
+                        Pin :
+                        <span id="gamepin"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="text-center">
+                <button onclick="handlesubmit(event)" class="btn btn-success fw-bold shadow-lg mb-3 mt-3 btn-md w-25 fs-4">Start Game</button>
+            </div>
+            <div class="row flex-wrap mb-1 justify-content-start align-items-center" id="card">
+                <div class="col-md-2 col-sm-6 mt-3 ml-2 mb-1 h-25" id="player">
+                    <div class="card shadow mt-2" style="width: 100%">
+                        <img src="/assets/img/host.jpg" id="imgUser" class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold" id="player_name">Host</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- loader -->
+        <div class="container" id="loader">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="loader">
+                        <div class="loader-inner">
+                            <div class="loading one"></div>
+                        </div>
+                        <div class="loader-inner">
+                            <div class="loading two"></div>
+                        </div>
+                        <div class="loader-inner">
+                            <div class="loading three"></div>
+                        </div>
+                        <div class="loader-inner">
+                            <div class="loading four"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal for starting quiz in 5sec timer -->
+        <button type="button" id="modal_open" style="display: none" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    </div>
+                    <div class="modal-body"><h1 id="temp_timer"></h1></div>
+                    <div class="modal-footer">
+                        <button type="button" id="modal_close" class="btn btn-secondary" data-dismiss="modal"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW QUESTION DISPLAY BLOCK-->
+        <div class="container mt-2" id="questions" style="margin-top: 100px !important">
+            <div class="d-flex mt-5 justify-content-center row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                                <div id="complete">MCQ Quiz</div>
+                                <span><h3 id="timer"></h3> </span>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom" id="main_frame" style="visibility: visible">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q.</h3>
+                                <h5 class="mt-1 ml-2" id="question">Which of the following country has largest population?</h5>
+                            </div>
+
+                            <div id="question_type">
+                                <div>
+                                    <div class="ans ml-2">
+                                        <div id="1" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary" role="alert">
+                                            This is a primary alert—check it out!
+                                        </div>
+                                    </div>
+
+                                    <div class="ans ml-2">
+                                        <div id="2" name="" value="" onclick="handleClick(this)" class="alert alert-primary" role="alert">
+                                            This is a primary alert—check it out!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="ans ml-2">
+                                        <div id="3" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary" role="alert">
+                                            This is a primary alert—check it out!
+                                        </div>
+                                    </div>
+
+                                    <div class="ans ml-2">
+                                        <div id="4" name="" value="" onclick="handleClick(this)" class="alert alert-primary" role="alert">
+                                            This is a primary alert—check it out!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bouncy_topper -->
+        <div class="container mt-2" id="bouncy_topper" style="display: none !important; margin-top: 100px !important">
+            <div class="d-flex justify-content-center align-items-center row">
+                <div class="col-md-10 col-lg-10 text-center">
+                    <h1 class="text-light fw-bold">Congratulations</h1>
+                    <br />
+                    <h1 class="text-light fw-bold">1st Place</h1>
+                    <br />
+                    <div class="display-4 text-light fw-bold animate__bounce" id="ranker"></div>
+                </div>
+            </div>
+        </div>
+        <!-- leaderboard -->
+        <div class="container-fluid" style="margin-top: 50px !important" id="leaderboard">
+            <div class="text-dark row justify-content-center"><h3 class="fw-bold text-center rounded-pill bg-info col-4 bg-info">LeaderBoard</h3></div>
+            <div class="d-flex text-center text-white bgg-text">
+                <div class="cover-container d-flex align-items-center w-100 p-1 mx-auto flex-column" style="height: 90vh">
+                    <div>
+                        <div class="row d-flex justify-content-center align-items-center" style="width: 600px">
+                            <div class="col" id="list">
+                                <main class="px-3 row d-flex mt-1 h-50 bg-success justify-content-center rounded-2" style="opacity: 0.7; font-weight: bolder">
+                                    <div class="col-4 justify-content-start d-flex h3">Rank</div>
+                                    <div class="col-4 h3">Name</div>
+                                    <div class="col-4 justify-content-end d-flex h3">Score</div>
+                                </main>
+                                <div id="dummy_list"></div>
+                                <main
+                                    id="rank_box"
+                                    class="px-3 bg-light text-dark mt-1 h-50 row d-flex justify-content-center align-items-center rounded-2"
+                                    style="background-color: transparent; font-weight: bolder"
+                                >
+                                    <div class="col-4 justify-content-start d-flex h3" id="rank">1</div>
+
+                                    <div class="col-4 h3" id="player_name">aks</div>
+                                    <div class="col-4 justify-content-end d-flex h3" id="totalMarks">10032</div>
+                                </main>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <footer class="mt-auto text-white-50">
+          <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+        </footer>
+      </div> -->
+            </div>
+        </div>
+
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        let socket = io.connect('/');
+        let quiz_id =<%=quiz%>;
+        socket.on('player_joined', function (player, playersInfo) {
+            new_player_joined(player);
+        });
+
+        let pin = 0;
+        let next_question_clicked = false;
+        let timer_done=false;
+        function onhandlesubmit(e) {
+            e.preventDefault();
+            console.log($('#hosting_container'));
+            $('#hosting_container').css('display', 'none');
+            $('#loader').show();
+            $('#waitingheader').show();
+            $('#player_waiting_room').show();
+            socket.emit('generatePin', quiz_id, (response) => {
+                console.log(response.gamepin);
+                pin = response.gamepin;
+                $('#gamepin').html(response.gamepin);
+                $('#loader').hide();
+                // $('#player').hide();
+            });
+        }
+
+        function update_timer(counter) {
+            $('#timer').html(counter);
+        }
+
+        function new_player_joined(player) {
+            var player_list = $('#player_waiting_room').children('#card');
+            var newPlayer = $('#player').clone();
+            newPlayer.show();
+            var name = newPlayer.children().children('.card-body').children();
+            newPlayer.get(0).style.display = "block";
+            var imgUser = newPlayer.children().children('#imgUser').get(0); //
+            imgUser.setAttribute('src',"/assets/img/participant.png");
+            console.log(name);
+            name.html(player.player_name);
+            player_list.append(newPlayer);
+        }
+
+        function loadingpage() {
+            $('#waitingheader').hide();
+            $('#player_waiting_room').hide();
+            $('#loader').hide();
+            $('#questions').hide();
+            $('#leaderboard').hide();
+            $('#bouncy_topper').hide();
+        }
+
+        function starting_quiz(ready) {
+            $('#player_waiting_room').hide();
+            $('#exampleModalLabel').html(ready);
+            let counter = 4;
+            $('#modal_open').click();
+            let interval = setInterval(() => {
+                $('#temp_timer').html(counter);
+                if (counter < 0) {
+                    clearInterval(interval);
+                    $('#modal_close').click();
+                }
+                counter--;
+            }, 900);
+        }
+
+        function loadQuestion({ question }) {
+            $('#player_waiting_room').hide();
+            console.log('options array', question);
+
+            $('#question').html(question.question_statement); //statement
+            $('#1').html(question.options[0].option_statement); //options
+            $('#1').attr('value', question.options[0].option_id);
+
+            $('#2').html(question.options[1].option_statement);
+            $('#2').attr('value', question.options[1].option_id);
+
+            $('#3').html(question.options[2].option_statement);
+            $('#3').attr('value', question.options[2].option_id);
+
+            $('#4').html(question.options[3].option_statement);
+            $('#4').attr('value', question.options[3].option_id);
+            $('#questions').show();
+            $('#leaderboard').show();
+        }
+
+        socket.on('connect', () => {
+            console.log('connected to server');
+        });
+
+        socket.emit('whoami', function (message) {
+            console.log(message);
+        });
+
+        function response_status() {
+            msg="see the updated leader board"
+            $('#exampleModalLabel').html(msg);
+            $('#modal_open').click();
+            $('#temp_timer').html('');
+            setTimeout(() => {
+                $('#modal_close').click();
+                location.href= '#leaderboard';
+            }, 1500);
+
+        }
+
+        function leaderboard(leader_array,flag) {
+            console.log('hello',leader_array)
+            if(flag){
+                $('#bouncy_topper').show()
+                $('#questions').hide();
+                $('#bouncy_topper').css('display','block !important')
+                $('#ranker').html(leader_array[0].player_name);
+                $('#bouncy_topper').addClass('animate__animated animate__rubberBand');
+
+            }
+            let list = $('#list');
+            list.children('#dummy_list').children().remove();
+            let dlist = $('#dummy_list');
+
+            for (let i = 0; i < leader_array.length; i++) {
+                let position = $('#rank_box').clone();
+                position.css('display', 'block');
+                position.children('#rank').html(i + 1);
+                position.children('#player_name').html(leader_array[i].player_name);
+                position.children('#totalMarks').html(leader_array[i].totalMarks);
+
+                dlist.append(position);
+            }
+            $('#leaderboard').css('display', 'block');
+
+        }
+            const element = document.querySelector('#bouncy_topper');
+            element.style.setProperty('--animate-duration', '190s');
+
+        async function handlesubmit(e) {
+            e.preventDefault();
+
+            socket.emit('startgame', pin, (response) => {});
+        }
+
+        function next_question(){
+            socket.emit('nextQuestion', pin, function (message) {});
+            next_question_clicked = true;
+        }
+
+        socket.on('starting', function (ready) {
+            starting_quiz(ready);
+        });
+
+        socket.on('roomUsers', function (message) {
+            console.log('roomUsers' + message);
+        });
+        socket.on('questions', function (question) {
+            loadQuestion(question);
+            next_question_clicked= false;
+        });
+
+        socket.on('finalleaderboard', function ({leaderBoardArray},quiz_id) {
+            console.log('inside socket',leaderBoardArray)
+            leaderboard(leaderBoardArray,true);
+        });
+
+        socket.on('leaderboard', function ({leaderBoardArray}) {
+            console.log('doneUser', leaderBoardArray);
+            response_status();
+            leaderboard(leaderBoardArray,false);
+
+            setTimeout(() => {
+                location.href = '#questions';
+                if(next_question_clicked != true){
+                    socket.emit('nextQuestion', pin, function (message) {});
+                }
+            }, 10000);
+        });
+        socket.on('timer', function (counter) {
+            if (counter == 0) {
+                timer_done = true;
+            }
+            update_timer(counter);
+            console.log('timer' + counter);
+        });
+
+        /* socket.on('user left',function(message){
+
+          console.log(message);
+
+          }) */
+
+        socket.on('disconnect', function () {
+            console.log('disconnected from server');
+        });
+    </script>
+</html>

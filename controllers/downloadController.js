@@ -7,6 +7,6 @@ module.exports.downloadFile=async(req,res)=>{
     console.log(fullname);
     var path = req.session.userid+"-"+fullname.fullname;
     console.log(path)
-    var final =`C:\\Users\\lenovo\\OneDrive\\Desktop\\kviz project\\public\\student responses\\${path}.xlsx`
+    var final =`C:\\Users\\lenovo\\OneDrive\\Desktop\\kviz project\\public\\responses_offline\\${path}.xlsx`
     res.download(final);
 }

@@ -40,8 +40,11 @@
               <div class="carousel-container">
                   <h2 class="animate__animated animate__fadeInDown">Welcome to <span>Kvizz</span></h2>
                   <p class="animate__animated fanimate__adeInUp">Study at home, at school – wherever you are – on your own or together with friends, to review learning content, prepare for tests and have some fun while learning something new!</p>
-                  <a href="/api/v1/login" class="btn-get-started animate__animated animate__fadeInUp scrollto">sign in</a>
-              </div>
+                  <%if(!session){%>
+                    <a href="/api/v1/login" class="btn-get-started animate__animated animate__fadeInUp scrollto">sign in</a>
+           
+                 <% }%>
+                    </div>
           </div>
 
           <div class="carousel-item">

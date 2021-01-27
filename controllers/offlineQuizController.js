@@ -42,14 +42,14 @@ exports.listQuizzes= async (req,res)=>{
 }
 exports.fetchQuizz=async (req,res)=>{
    // console.log(req.query);
-    const quiz = await db.quiz.findOne({attributes:["quiz_id","tittle","description","overall_timer"],
+    const quiz = await db.quiz.findOne({attributes:["quiz_id","tittle","description","overall_timer", "quiz_thumbnail"],
     where: {quiz_id :req.query.id } 
     });
-    console.log(quiz);
+    //console.log(quiz);
     const questions = await db.question.findAll({
         where : {quiz_id : req.query.id}
     });
-    console.log(questions[0].dataValues.question_type)
+    //console.log(questions[0].dataValues.question_type)
     var question_array=[{}];
     
     for(let i = 0 ; i< questions.length ;i++){
@@ -61,7 +61,8 @@ exports.fetchQuizz=async (req,res)=>{
         data["correct_option"]=questions[i].dataValues.correct_option;
         data["max_points"]=questions[i].dataValues.max_points;
         data["serial_no"] = questions[i].dataValues.serial_no;
-       
+        data["quiz_thumbnail"] = questions[i].dataValues.quiz_thumbnail;
+
         const option = await db.options.findAll({exclude: ['question_id'],
                      where: {question_id : questions[i].dataValues.question_id} 
         });
@@ -86,7 +87,8 @@ exports.fetchQuizz=async (req,res)=>{
         description:quiz.dataValues.description,
         overall_timer:quiz.dataValues.overall_timer,
         number:questions.length,
-        questions:question_list
+        questions:question_list,
+        quiz_thumbnail: quiz.dataValues.quiz_thumbnail,
     }
     //req.session.questions = question_array;
     //console.log("hello",question_array);
@@ -104,42 +106,3 @@ exports.fetchQuizz=async (req,res)=>{
  }
    
 }
-/**const result  = {};
-    const questions = await db.question.findAll({
-        where : {quiz_id : req.query.id}
-    });
-    console.log(JSON.stringify(questions));
-    const questionList = JSON.parse(JSON.stringify(questions));
-    console.log(questionList[0]);
-    if(questionList){
-        for(let i=0; i<questionList.length; i++){
-            let data = {};
-            data["question"] = questionList[i];
-            const options = await db.options.findAll({
-                where : {question_id : questionList[i].question_id}
-            });
-            let optionsList = JSON.parse(JSON.stringify(options));
-            data["options"] = optionsList;
-            const category = await db.categories.findOne({
-                where : {Cat_id : questionList[i].Cat_id}
-            });
-            data["category"] = category.Cat_name;
-
-            const tagIds = await db.question_tag.findAll({attributes:["tag_id"], where : {question_id : questionList[i].question_id}});
-            const tags = {};
-            for (x in tagIds){
-             
-                const tag = await db.tags.findOne({attributes:["tag_name"],where : {tag_id: tagIds[x]}});
-                tags["tag_name"] = tag;
-            }
-            tags1 = JSON.parse(JSON.stringify(tags));
-            data["tags"] = tags1;
-            result[questionList[i].question_id] = data; 
-        }
-        res.json(result);
-    }else{
-        res.json({
-            status : 'error',
-            message : "Empty Categoires"
-        });
-    } */

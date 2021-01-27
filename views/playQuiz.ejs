@@ -5,14 +5,14 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
         <link href="/assets/img/favicon.png" rel="icon">
         <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-    
-        
+
+
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-    
-        
+
+
         <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
         <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -22,46 +22,108 @@
         <link href="/assets/vendor/venobox/venobox.css" rel="stylesheet">
         <link href="/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
-    
-       
+
+
         <link href="/assets/css/style.css" rel="stylesheet">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
-  
+
+
     <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/createquizee.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
    <link href="/assets/compheader.css" rel="stylesheet">
 </head>
+<style>
+  body,
+  html {
+      height: 100%;
+  }
+
+
+
+  body {
+      margin: 0;
+      padding: 0;
+  }
+
+  .bg-image {
+      /* The image used */
+      background-image: url("/assets/img/bg.jpg");
+      /* Add the blur effect */
+      filter: blur(8px);
+      -webkit-filter: blur(8px);
+      /* Full height */
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      margin: 0;
+      background-position: center center;
+      background-attachment: fixed;
+  }
+  /* Position text in the middle of the page/image */
+
+  .bgg-text {
+      /* Fallback color */
+      /* Black w/opacity/see-through */
+      color: black;
+      position: absolute;
+      left: 16%;
+      z-index: 2;
+  }
+
+</style>
+
   <body>
-   
+   <div class="bg-image"></div>
 <!--navabar component-->
     <%- include('partials/navbar') %>
-      <div class="container">
-    <div class="row row-cols-1  justify-content-center align-items-center d-flex-wrap row-cols-md-3 g-4">
-  <div class="col shadow d-flex justify-content-center" >
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded h-100"style="width: 50rem;">
-        <div class="d-flex shadow-lg p-3 mb-5 bg-white rounded justify-content-center" style="height: 25rem;width: 45rem;">
-            <img src="/sample.jpeg" class="card-img-top" alt="...">
-    
-        </div>       
-        <div class="card-body justify-content-center align-items-center"> 
-        <p><h5 class="card-title">Quiz Details</h5></p>
-        <p class="card-text">Quiz name : <b><%=results.name%><b></p>
-        <p class="card-text">Quiz Description : <b><%=results.description%><b></p>
-        <p class="card-text">Number of questions : <b><%=results.number%> <b></p>
-            <p class="card-text">Quiz Time : <b><%=results.overall_timer%><b></p>
-               <a href=<%="/api/v1/upload-multiple-files?quiz_id="+quiz_id%> >  Start Quiz</a>
-                <a href="/api/v1/offlineQuiz"> <button type="button" class="btn btn-primary">Back</button ></a>
- 
-            </div>
+     <div class="container-fluid p-5 mt-5 d-flex justify-content-center" >
+    <div class="card mt-5 p-2 mb-3 h-50" >
+      <div class="row no-gutters p-0 justify-content-center align-items-center " >
+        <div class="col-md-5 p-0 col-sm-5 ">
+          <% if (results.quiz_thumbnail == null || results.quiz_thumbnail == '' || results.quiz_thumbnail == undefined) { %>
+            <img src="/sample.jpeg" class="card-img-top"  alt="..." />
+            <% } else { %>
+            <img src="/assets/img/<%=results.quiz_thumbnail%>" class="card-img-top" alt="..." />
+            <%}%>
+        </div>
+        <div class="col-md-7  col-sm-12">
+          <div class="card-body col-md-12 col-sm-12">
+            <h1 class="card-title"><b>Quiz Details</b></h1>
+            <p class="card-text"><b>Quiz name : <b><%=results.name%><b></p>
+            <p class="card-text">Quiz Description : <b><%=results.description%><b></p>
+            <p class="card-text">Number of questions : <b><%=results.number%> <b></p>
+            <p class="card-text">Quiz Time : <b><%=(results.overall_timer/60)+" minutes"%><b></p>
+              <a href="<%='/api/v1/upload-multiple-files?id='+ quiz_id%>" ><button type="button" class="btn mt-4 mt-sm-0 shadow-lg btn-outline-primary">start quiz</button ></a>
+              <a href="/api/v1/offlineQuiz"> <button type="button" class="btn shadow-lg mt-4 mt-sm-0  btn-outline-primary">Back</button ></a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
- 
+    </div>
+    <!--<div class="container">
+      <div class="shadow-lg pt-5 mb-5 mt-5 bg-white rounded d-flex justify-content-center w-60" >
+        <div><img src="/sample.jpeg" class="card-img-top" alt="..." style="height: 400px;width: 400px;"></div>
+        <div class="card-body pl-5">
+          <p><h5 class="card-title">Quiz Details</h5></p>
+          <p class="card-text">Quiz name : <b><%=results.name%><b></p>
+          <p class="card-text">Quiz Description : <b><%=results.description%><b></p>
+          <p class="card-text">Number of questions : <b><%=results.number%> <b></p>
+              <p class="card-text">Quiz Time : <b><%=results.overall_timer%><b></p>
+                 <a href="/api/v1/upload-multiple-files" >  Start Quiz</a>
+                  <a href="/api/v1/offlineQuiz"> <button type="button" class="btn btn-primary">Back</button ></a>
 
-</div>
+            </div>
+      </div>
+    </div>-->
+
 <div hidden id ="file" >
   <%=results.questions %>
 </div>
@@ -69,18 +131,19 @@
 <div hidden id ="timer" >
   <%=results.overall_timer %>
 </div>
+
 <script>
-    
+
 let file1 = document.getElementById('file').innerHTML;
-      
+
       let file = JSON.parse(file1);
-      
-         
+
+
 let timer = document.getElementById('timer').innerHTML;
-  
+
       let time =  JSON.parse(timer);
       console.log(time);
-     
+
       localStorage.setItem("offline_quiz",file1);
       localStorage.setItem("timer",time);
 

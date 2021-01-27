@@ -117,6 +117,7 @@ class Game {
         this.questions = args[4];
         this.running_question_index = args[5];
         this.question_count = args[6];
+        this.is_started=args[7];
     }
 
     sortByPlayerMarks() {

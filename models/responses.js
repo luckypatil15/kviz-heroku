@@ -46,6 +46,10 @@ module.exports = function(sequelize, DataTypes) {
     response_time: {
       type: DataTypes.STRING(30),
       allowNull: true
+    },
+    is_correct: {
+      type: DataTypes.TINYINT,
+      allowNull: true
     }
   }, {
     sequelize,

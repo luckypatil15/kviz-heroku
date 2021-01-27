@@ -12,14 +12,14 @@ module.exports.getprofile=async (req, res)=>{
     if(profile){
         profile  = JSON.parse(JSON.stringify(profile));
     }
-    let quizes =   await db.quiz.findAll({attributes: { exclude: ['quiz_thumbnail'],where:{creator_id:req.session.userid} }});
+    let quizes =   await db.quiz.findAll( {where:{creator_id:req.session.userid} });
     if(quizes){
         quizes  = JSON.parse(JSON.stringify(quizes));
     }
     
 
     console.log("profile",profile);
-    //console.log(quizes);
+    console.log(quizes);
     if(session_check_controller.check_session(req,res)){
      
          res.render('profile.ejs',{session:session_check_controller.check_session(req,res),

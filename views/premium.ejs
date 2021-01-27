@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    
+
     <link href="/assets/img/favicon.png" rel="icon">
     <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-    
+
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
     <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -26,76 +26,105 @@
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/compheader.css" rel="stylesheet">
     <link href="/createquizee.css" rel="stylesheet">
+    <style>
+     body,
+    html {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+
+        padding: 0;
+
+    }
+
+    .bg-image {
+        content: '';
+        /* The image used */
+
+        /* Add the blur effect */
+
+        /* Full height */
+
+        /* Center and scale the image nicely */
+        background-image: url(/assets/img/bg/bgQuestion.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: repeat-y;
+
+    }
+    </style>
 </head>
-<body style="background-color: #9ca198;">
+<body class="bg-info bg-image" >
 
     <!--NAV-BAR-->
     <%- include('partials/navbar') %>
-    <div class="container">
-       
+    <div class="container-fluid">
 
-            <div class="row justify-content-center  align-items-lg-center   mt-5" style="height:100vh;">
-            
-            <div class="col-md-4"> 
-                <div class="card shadow "style="width: 28 rem;">
+
+            <div class="row justify-content-center  align-items-lg-center   mt-5 mt-md-5 mt-sm-5" style="height:100vh;">
+
+            <div class="col-md-4 col-12"  style="height:55vh">
+                <div class="card shadow-lg "style="width: 28 rem;">
                      <!-- <img class="card-ing-top" src="spi.png" alt="card img cap"  >
                      -->
-                     <div class="card-body text-center "   >
-                      <div class="row d-flex align-items-lg-center justify-content-md-center" style="background-color: #008891; color:#fff">
-                        <h4>Basic</h4><br>
-                      </div>  
-                        
+                     <div class="card-body text-center shadow-lg rounded-3 "    >
+                      <div class="row d-flex align-items-lg-center justify-content-md-center mb-3" >
+                        <h4 class="shadow-lg col-10 row justify-content-center align-items-center bg-info bg-gradient rounded-pill fw-bold text-size-5  " style="height:8vh">Basic </h4><br>
+                      </div>
+
                      <b> 1 </b> quiz<br>
                         <b>25</b> total responses<br>
                         Ads on Survey/Polls<br>
                         Unsupported<br>
-                              <p class="card-text">
+                              <p class="card-text mt-4">
                             <br>
                                 <h3>999₹</h3>
-            </p> 
+            </p>
             <form action="/api/v1/premium" method="POST">
-              <input type="hidden" name="pack_name" value="Basic"> 
-              <input type="hidden" name="amount" value="99900"> 
-            <button class="btn btn-success" type="submit">Buy Now</button> 
+              <input type="hidden" name="pack_name" value="Basic">
+              <input type="hidden" name="amount" value="99900">
+            <button class="btn btn-outline-success shadow-lg mt-2" type="submit">Buy Now</button>
             </form>
             </div>
-            
+
             </div>
-            
+
             </div>
-             <div class="col-md-4">
+             <div class="col-md-4 col-12"  style="height:55vh" >
                 <div class="card shadow "style="width: 28 rem;">
                     <!-- <img class="card-ing-top" src="spi.png" alt="card img cap"  >
                     -->
                     <div class="card-body text-center "   >
-                       <div  class="row d-flex align-items-lg-center justify-content-md-center"        style="background-color: #008891; color:#fff">
-                        <h4>Gold</h4><br>
-                       </div> 
+                       <div  class="row d-flex align-items-lg-center justify-content-md-center mb-2"        >
+                        <h4 class="shadow-lg col-10 row justify-content-center align-items-center bg-info bg-gradient rounded-pill fw-bold text-size-5  " style="height:8vh">Gold</h4><br>
+                       </div>
                         <br>
-                             <p class="card-text">
+
                               <b>10</b>   quizzes<br>
                                <b>Unlimited</b>  questions<br>
                               <b>1,000 </b>  responses/month<br>
-                              <br>
-           <h3>1500₹</h3>
+                              <br> <p class="card-text mt-5">
+           <h3 >1500₹</h3></p>
            <form action="/api/v1/premium" method="POST">
-            <input type="hidden" name="pack_name" value="Gold"> 
-            <input type="hidden" name="amount" value="150000"> 
-          <button class="btn btn-success" type="submit">Buy Now</button> 
+            <input type="hidden" name="pack_name" value="Gold">
+            <input type="hidden" name="amount" value="150000">
+          <button class="btn btn-outline-success shadow-lg mt-2" type="submit">Buy Now</button>
           </form>
            </div>
-           
+
            </div>
-             </div> 
-            <div class="col-md-4">
-                <div class="card shadow "style="width: 28 rem;">
+             </div>
+            <div class="col-md-4 col-12" style="height:55vh" >
+                <div class="card shadow-lg "style="width: 28 rem;">
                     <!-- <img class="card-ing-top" src="spi.png" alt="card img cap"  >
                     -->
                     <div class="card-body text-center "   >
-                      <div  class="row d-flex align-items-lg-center justify-content-md-center"      style="background-color: #008891; color:#fff">
-                        <h4>Platinum</h4>
-                      </div> 
-           
+                      <div  class="row d-flex align-items-lg-center justify-content-md-center"     >
+                        <h4 class="shadow-lg col-10 row justify-content-center align-items-center bg-info bg-gradient rounded-pill fw-bold text-size-5  " style="height:8vh">Platinum</h4>
+                      </div>
+
                              <p class="card-text">
                                <b>Unlimited</b>  quizzes<br>
                                <b>Unlimited </b> questions<br>
@@ -105,18 +134,18 @@
                                 Integrations<br>
                                 Custom Themes<br>
                                 <h3>1999₹</h3>
-           </p> 
+           </p>
            <form action="/api/v1/premium" method="POST">
-            <input type="hidden" name="pack_name" value="Platinum"> 
-            <input type="hidden" name="amount" value="199900"> 
-          <button class="btn btn-success" type="submit">Buy Now</button> 
+            <input type="hidden" name="pack_name" value="Platinum">
+            <input type="hidden" name="amount" value="199900">
+          <button class="btn btn-outline-success shadow-lg" type="submit">Buy Now</button>
           </form>
            </div>
-           
+
            </div>
             </div>
          </div>
-      
+
         </div>
         <%- include('partials/footer') %>
 </body>

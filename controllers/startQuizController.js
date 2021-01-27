@@ -9,11 +9,11 @@ module.exports.getQuiz_page= async function (req,res) {
     try {
         console.log("hello brother");
         var question_array = req.session.questions;
-        var  quiz_id = req.query.quiz_id;
+        var quiz_id  = req.query.id;
         if(session_check_controller.check_session(req,res)){
-            // console.log("inside checker")
+             console.log(quiz_id)
               res.render('startQuiz.ejs',{session:session_check_controller.check_session(req,res),
-                                          username:req.session.userid,
+                                          username:req.session.user,
                                           quiz_id :quiz_id,
                                           
                                            });

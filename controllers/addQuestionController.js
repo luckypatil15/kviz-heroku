@@ -2,28 +2,31 @@ var mysql = require('mysql');
 var Config = require('../config');
 const fs = require('fs');
 var Promise = require("bluebird");
+const session_check_controller = require("./session_check_controller");
+const db = require('../models/index');
+const loadFunction = require('../models1/loaderFunction');
 
-const db=require('../models/index');
 
 
-    module.exports.addquestion = async (req,res) => {
-        try{
-            var question_statement = req.body.question_statement;
-            var quiz_id = req.session.quizzid.quiz_id;
-            // if(isQuestionExist(question_statement,quiz_id)){
-            //     res.json({status:"failed", msg:"question already exist"})
-            // }
-            console.log( req.body);
-           console.log(req.body.correct_serial);
-           
-            let optionsCheck = {};
+module.exports.addquestion = async(req, res) => {
+    try {
+        var question_statement = req.body.question_statement;
+        var quiz_id = req.session.quizzid.quiz_id;
+        // console.log(quiz_id);
+        // if(isQuestionExist(question_statement,quiz_id)){
+        //     res.json({status:"failed", msg:"question already exist"})
+        // }
+        // console.log("req.body = "+req.body);
+        // console.log(req.body.correct_serial);
+
+        let optionsCheck = {};
         var cat_name = req.session.catId;
         var tags = "";
         var optionsList = "";
-       if(req.body.correct_serial==""){
-           correct_serial=0;
-       }
-       
+        // if (req.body.correct_serial == "") {
+        //     correct_serial = 0;
+        // }
+
         var question_type = req.body.question_type;
         var serial_no = req.body.serial_no;
         var difficulty = req.body.difficulty;
@@ -31,10 +34,10 @@ const db=require('../models/index');
         var max_points = req.body.max_points;
         var option_state = req.body.options;
         var correct_serial = req.body.correct_serial;
-        let question_Image_Buffer;
+        let question_image = req.body.question_image;
         var tagList = req.body.tags;
-        
-      
+        console.log(correct_serial);
+
         // for(var i=0;i<tagList.length;i++){
         //     console.log("true or false tags = "+tagsCheck[tagList[i]]);
         //     if(tagsCheck[tagList[i]]){
@@ -45,187 +48,185 @@ const db=require('../models/index');
         //         }else{
         //             tags +=  "( '"+ tagList[i]+"' ),";
         //         }
-        //     }      
+        //     }
         // }
-    
-        
-    
+
+
+
         // await isOptionsPresent(option_state);
-        for(var i=0;i < option_state.length;i++){
-            if(optionsCheck[option_state[i].stmt]){
+        for (var i = 0; i < option_state.length; i++) {
+            if (optionsCheck[option_state[i].stmt]) {
                 continue;
-            }else{
-                if(i==option_state.length-1){
-                    optionsList +=  "( q_id ,'"+ option_state[i].statement+"',"+ option_state[i].serial_no+" )";
-                }else{
-                    optionsList +=  "( q_id ,'"+ option_state[i].statement+"',"+ option_state[i].serial_no+" ),";
+            } else {
+                if (i == option_state.length - 1) {
+                    optionsList += "( q_id ,'" + option_state[i].statement + "'," + option_state[i].serial_no + " )";
+                } else {
+                    optionsList += "( q_id ,'" + option_state[i].statement + "'," + option_state[i].serial_no + " ),";
                 }
             }
-            
+
         }
-    
+
         console.log(optionsList);
-       
-        if(req.file==undefined){
-            question_Image_Buffer = null;
-          
-          }       
-         else {
-             console.log(req.file.path);
-             question_Image_Buffer = fs.readFileSync(req.file.path);
-              console.log( "obj not exist  = "+obj);
-              
-       }
-    
-       
-    //    if(tags === ""){
-    //        console.log("empty tags");
-    //     tags = "";
-    //    }
-    //    if(optionsList === ""){
-    //     optionsList = "";
-    //    }
-    
-       console.log("adding.....................")
+
+        // console.log("questionlist" + questions);
+
+
+
+        //    if(tags === ""){
+        //        console.log("empty tags");
+        //     tags = "";
+        //    }
+        //    if(optionsList === ""){
+        //     optionsList = "";
+        //    }
+        console.log(question_image);
+        if(question_image === undefined || question_image === null){
+            question_image = "null";
+        }
+        console.log("adding.....................");
         var query = `call insert_question_details (:catName,:quiz_id,:question_type,:question_statement,:serial_no,:difficulty,:question_timer,:correct_option,:max_points,:question_image,"${optionsList}",:correct_serial )`
-        
-        let procedureCall =   await db.sequelize.query(query, {
-            
+        console.log(query);
+        let procedureCall = await db.sequelize.query(query, {
+
             replacements: {
                 catName: cat_name,
-                quiz_id: quiz_id ,
+                quiz_id: quiz_id,
                 question_type: question_type,
-                question_statement:question_statement,
+                question_statement: question_statement,
                 serial_no: serial_no,
-                difficulty:difficulty,
+                difficulty: difficulty,
                 question_timer: question_timer,
-                correct_option:"xyz",
+                correct_option: "xyz",
                 max_points: max_points,
-                question_image: question_Image_Buffer,
+                question_image:question_image,
                 correct_serial: correct_serial
-            
-               
+
+
             }
-        }).then(v=>{console.log("successfull",v)
-                res.json({msg:"successful",status:true});
-            }).catch(e=>{
-                console.log(e)
-                res.send({msg:"unsuccessful",status:false})
+        }).then(async(v) => {
+            console.log("successfull", v);
+            // var questions = await loadFunction.questionLoader(req, res);
+            res.render('addQuestion.ejs', {
+                session: session_check_controller.check_session(req, res),
+                username: req.session.user,
+                // results: questions
+
             });
-        
-        
+        }).catch(e => {
+
+            console.log(e)
+            res.send({ status: "unsuccessful" })
+        });
+
+
         // mergeQuestionTags(req.body.tags,Q.question_id);
         // tagsCheck = {};
-        // return true;  
-        }
-        catch(err) {
-            console.log("===========================error===================================");
-            console.error(err);
-            res.send({status:"unsuccessful"})
-            return 0;
-        }
+        // return true;
+    } catch (err) {
+        console.log("===========================error===================================");
+        console.error(err);
+        res.send({ status: "unsuccessful" })
+        return 0;
     }
-    
-    
-    
-    
-    async function isTagsPresent(tagList,Qid){
-        try{
-            for(let i=0;i<tagList.length;i++){
-                console.log(tagList[i]);
+}
+
+
+
+
+async function isTagsPresent(tagList, Qid) {
+    try {
+        for (let i = 0; i < tagList.length; i++) {
+            console.log(tagList[i]);
             const tag = await db.tags.findOne({
-               
-                where: { tag_name:tagList[i]}
+
+                where: { tag_name: tagList[i] }
             });
-            
-            console.log("created "+tag.tag_name);
-            if(tag === null){
+
+            console.log("created " + tag.tag_name);
+            if (tag === null) {
                 tagsCheck[tagList[i]] = false;
-            }else{
+            } else {
                 tagsCheck[tagList[i]] = true;
             }
-           
+
         }
         console.log(tagsCheck);
-            return ;
-    
-        }
-        catch(err){
-            console.log(err);
-           
-        }
+        return;
+
+    } catch (err) {
+        console.log(err);
+
     }
-    
-    async function isQuestionExist(statement,quizId){
-        try {
-            let data = await db.question.findOne({
-                where: {
-                    quiz_id : quizId,
-                    question_statement : statement
-    
-                },
-            });
-            console.log("question exist = "+data);
-            if (data == null) return false;
-            else return true;
-        } catch {
-            (err) => {
-               console.error(err);
-            };
-        }
+}
+
+async function isQuestionExist(statement, quizId) {
+    try {
+        let data = await db.question.findOne({
+            where: {
+                quiz_id: quizId,
+                question_statement: statement
+
+            },
+        });
+        console.log("question exist = " + data);
+        if (data == null) return false;
+        else return true;
+    } catch {
+        (err) => {
+            console.error(err);
+        };
     }
-    
-    async function mergeQuestionTags(tags,Qid){
-        try{
-            console.log("tags[0] = "+tags[0]);
-            for(let i=0;i<tags.length;i++){
-                console.log(tags[i]);
+}
+
+async function mergeQuestionTags(tags, Qid) {
+    try {
+        console.log("tags[0] = " + tags[0]);
+        for (let i = 0; i < tags.length; i++) {
+            console.log(tags[i]);
             const t = await db.tags.findOne({
-               
-                where: { tag_name:tags[i]}
+
+                where: { tag_name: tags[i] }
             })
-            console.log("tag id = "+t.tag_id);
-            console.log("tag name = "+t.tag_iname);
-            
+            console.log("tag id = " + t.tag_id);
+            console.log("tag name = " + t.tag_iname);
+
             db.question_tag.findOrCreate({
-                  where: { 
-                    tag_id:t.tag_id,
-                    question_id : Qid
-                    } 
+                where: {
+                    tag_id: t.tag_id,
+                    question_id: Qid
+                }
             });
         }
-            return ;
-    
-        }
-        catch(err){
-            console.log(err);
-            
-        }
+        return;
+
+    } catch (err) {
+        console.log(err);
+
     }
-module.exports.check_status=  function (req,res) {
+}
+module.exports.check_status = function(req, res) {
     //console.log('inside  check status')
     const Connection = mysql.createConnection(config);
     var email = req.session.user;
     var folderName = req.body.foldername;
-   // console.log(folderName,email)
-    var data = [email,'pending'];
+    // console.log(folderName,email)
+    var data = [email, 'pending'];
     Connection.connect();
     Connection.query(
-		'select count(*) as count from ComparisonHistory where email = ? and status =  ?',
-		data,
-		(err, results) => {
-           
-			if (err) {
-				console.log(err);
-				reject(err);
-			}
-			
-            else{
+        'select count(*) as count from ComparisonHistory where email = ? and status =  ?',
+        data,
+        (err, results) => {
+
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
                 //console.log(results);
                 res.json(results);
             }
             Connection.end();
-		});
-    
+        });
+
 
 }

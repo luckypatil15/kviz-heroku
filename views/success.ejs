@@ -1,49 +1,65 @@
-
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="Description" content="Enter your description here" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <title>quiz Creation successfull</title>
+        <style>
+            .body {
+                margin: 0;
+                padding: 0;
+            }
+            #icn {
+                font-size: 10vh;
+            }
+            .btn:hover {
+                transform: scale(1.05);
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Enter your description here" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>quiz Creation successfull </title>
-    <style>
-        #icn {
-            font-size: 12vh;
-            color: green;
-        }
-    </style>
-    <script>
+            .card:hover {
+                transform: scale(1.05);
+            }
+            .bg-image {
+                content: '';
+                /* The image used */
 
-    </script>
-</head>
+                /* Add the blur effect */
 
-<body>
+                /* Full height */
 
-    <div class="container">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-6  d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
-                <div> <i id="icn" class="far fa-check-circle"></i> </div> <br>
-                <h2 class="text-danger">quiz creation  SUCCESFULL....</h2>
+                /* Center and scale the image nicely */
+                background-image: url(/assets/img/bg/bgQuestion.jpg);
+                background-position: center;
+                background-size: cover;
+                background-repeat: repeat-y;
+            }
+        </style>
+        <script></script>
+    </head>
 
-                <h5>We have created a quiz for you </h5>
-                <h5>pin :  <%= results.pin%></h5>
-                <h5>quiz Name :  <%= results.tittle%></h5>
-                
+    <body>
+        <div class="container-fluid bg-image" style="height: 100vh">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-6 alert-success shadow-lg d-flex flex-column justify-content-center rounded-pill align-items-center" style="height: 50 vh">
+                    <div><i id="icn" class="far fa-check-circle text-success mt-4"></i></div>
+                    <br />
+                    <h2 class="text-danger fw-bold">Quiz Created Successfuly</h2>
 
-              <a href="/api/v1/home">  <button  class="btn btn-outline-danger">home</button></a>
+                    <h5>We have created a quiz for you</h5>
+                    <h5>pin : <%= results.pin%></h5>
+                    <h5>quiz Name : <%= results.tittle%></h5>
 
-
+                    <a href="/api/v1/" class="btn-lg btn-danger mb-4 mt-4 text-decoration-none fw-bold fs-4"> home</a>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
 </html>

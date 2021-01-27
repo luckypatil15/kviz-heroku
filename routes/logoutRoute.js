@@ -7,4 +7,6 @@ router
     .route('/')
     .get(logoutController.logoutpage);
 
+
 module.exports = router;
+

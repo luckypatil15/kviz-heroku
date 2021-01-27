@@ -25,31 +25,34 @@ module.exports.completeQuiz = function (req, res) {
         console.log(error);
     }
 };
-module.exports.completed = function (req, res) {
+module.exports.completed = function(req, res) {
 
-    var update_timer = req.body.overall_timer; 
+    let obj;
+    var update_timer = req.body.overall_timer;
     var present_date = req.body.present_date;
     var quiz_id = req.session.quizzid.quiz_id;
-    var pin = quiz_id+"-"+req.session.quizzid.creator_id;
-    var results ={pin : pin,tittle:req.session.quizzid.tittle};
+    var pin = quiz_id + "-" + req.session.quizzid.creator_id;
 
-    db.quiz.update(
-        { overall_timer: update_timer,quiz_present_date:present_date,quiz_pin:pin },
-        { where: { quiz_id: quiz_id } }
-      ).then(result=>{}
-        ).catch(err =>{
-            console.log(err);
-            res.render('homePage.ejs', {
-              session: session_check_controller.check_session(req, res),
-              username: req.session.user,
+
+    var results = { pin: pin, tittle: req.session.quizzid.tittle };
+
+    db.quiz.update({ overall_timer: update_timer, quiz_present_date: present_date, quiz_pin: pin }, { where: { quiz_id: quiz_id } }).then(result => {
+
+
+    }).catch(err => {
+        console.log(err);
+        res.render('homePage.ejs', {
+            session: session_check_controller.check_session(req, res),
+            username: req.session.user,
         });
     });
-    if(session_check_controller.check_session(req, res)) {
-       // console.log('inside checker');
+    if (session_check_controller.check_session(req, res)) {
+        // console.log('inside checker');
         res.render('success.ejs', {
             session: session_check_controller.check_session(req, res),
             username: req.session.user,
-            results:results
+            results: results,
+
         });
     } else {
         //console.log('outiside checker');

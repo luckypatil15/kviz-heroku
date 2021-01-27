@@ -7,7 +7,7 @@ module.exports.singing_up = function (req, res) {
     let activeToken = crypto.randomBytes(17).toString('hex');
     let mailid = req.body.email;
   
-    let link = 'http://' + req.get('host') + '/api/v1/verify?id=' + activeToken + '&email=' + mailid;
+    let link = 'https://83a6bf0b887a.ngrok.io' + '/api/v1/verify?id=' + activeToken + '&email=' + mailid;
     let activeExpires = Date.now() + 1 * 3600 * 1000;
 
     let mailOption = {

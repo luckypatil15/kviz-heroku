@@ -11,21 +11,36 @@ module.exports.getpage=async (req,res)=>{
     }
     const Connection = mysql.createConnection(Config);
     await Connection.connect();
-    var org_details = await Connection.queryAsync('SELECT * FROM org_details WHERE userid = ?',[req.session.userid]);
+    var org_details = await db.sequelize.query(`SELECT * FROM org_details WHERE userid = :user`,{replacements:{
+        user:req.session.userid
+    }
+    });
+    if(org_details){
+        org_details = JSON.parse(JSON.stringify(org_details));
+    }
 
+    if(!org_details){
+        org_details.org_id = "1";
+        org_details.organization = "kviz Team,cdac mumbai";
+        org_details.lang = 'english';
+        org_details.userid = req.session.userid;
+        org_details.user_type = 'student';
+    }
+    //console.log("hii",org_details);
     await Connection.end();
     if(session_check_controller.check_session(req,res)){
      
         res.render('editprofile.ejs',{session:session_check_controller.check_session(req,res),
                                     username:req.session.user,
                                     userinfo:userinfo,
-                                    org_details:org_details[0]
+                                    org_details:org_details
                                      });
     }
     else{
        res.render('login.ejs',{session:session_check_controller.check_session(req,res), flag:true});
    }
 }
+//Laxman edit profiele
 module.exports.editprofile=async (req,res)=>{
     let fullname = req.body.fullname;
     let email = req.body.email;
@@ -37,7 +52,7 @@ module.exports.editprofile=async (req,res)=>{
         { where: { userid: req.session.userid } }
       ).then(result=>{}
         ).catch(err =>{
-            console.log(err);
+            //console.log(err);
             res.render('homePage.ejs', {
               session: session_check_controller.check_session(req, res),
               username: req.session.user,

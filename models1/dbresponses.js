@@ -10,6 +10,6 @@ exports.insert_response = async (response) => {
         question_id: response.question_id,
         response_statement: response.response_statement,
         response_time: response.response_time,
+        is_correct : response.is_correct
     });
-    //console.log(response1);
 };

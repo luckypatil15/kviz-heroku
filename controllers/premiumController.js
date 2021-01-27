@@ -13,7 +13,7 @@ module.exports.getPremiumPage=async (req,res)=>{
     else{
        res.render('login.ejs',{session:session_check_controller.check_session(req,res), flag:true});
    }
-}
+}//page send
 module.exports.buyingPackage=async(req,res)=>{
     let instance = new Razorpay({
         key_id:'rzp_test_iQtO5P0XiunwfV',
@@ -46,7 +46,7 @@ module.exports.buyingPackage=async(req,res)=>{
     else{
        res.render('login.ejs',{session:session_check_controller.check_session(req,res), flag:true});
    }
-}
+}//order id generation
 module.exports.check_payment=async(req,res)=>{
    
     var body = req.body.order_id + "|"+req.body.payment_id;

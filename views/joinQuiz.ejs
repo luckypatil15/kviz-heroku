@@ -8,12 +8,37 @@
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
         <link href="/assets/css/style.css" rel="stylesheet" />
         <link href="/createquizee.css" rel="stylesheet" />
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossorigin="anonymous"
         />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
         <link href="/assets/compheader.css" rel="stylesheet" />
         <link rel="stylesheet" href="/assets/css/Quizeeenterpin.css" />
         <style>
@@ -22,17 +47,32 @@
                 height: 100%;
             }
 
-            * {
-                box-sizing: border-box;
-            }
-
             body {
                 margin: 0;
                 padding: 0;
             }
+            .btn:hover {
+                transform: scale(1.05);
+            }
 
+            .card:hover {
+                transform: scale(1.05);
+            }
             /* Position text in the middle of the page/image */
-
+            .bg-image {
+                /* The image used */
+                background-image: url('/assets/img/bg/bgQuestion.jpg');
+                background-repeat: repeat-y;
+                /* Add the blur effect */
+                /* filter: blur(8px);
+            -webkit-filter: blur(8px); */
+                /* Full height */
+                height: 100%;
+                /* Center and scale the image nicely */
+                background-position: center;
+                /* background-repeat: no-repeat; */
+                background-size: cover;
+            }
             .bgg-text {
                 /* Fallback color */
                 /* Black w/opacity/see-through */
@@ -41,52 +81,41 @@
                 left: 30%;
                 z-index: 2;
             }
+            #gamepin:hover {
+                scale: 1.1;
+            }
         </style>
         <link href="/css/loader.css" rel="stylesheet" />
-        s
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js "></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js "></script>
+        <!-- <script src="/assets/js/joinQuiz.js"></script> -->
         <!-- <script src="enterpin.js"></script> -->
     </head>
-    <body onload="loadpage()">
+    <body onload="loadpage()" class="bg-image">
         <!-- navbar component-->
         <%- include('partials/navbar') %>
 
         <!--enter pin portion -->
-        <div class="container container-fluid">
+        <div class="container-fluid">
             <div class="row align-items-center justify-content-center" id="pin" style="height: 100vh">
                 <div class="col-3"></div>
 
                 <div class="col-6 d-flex align-items-center justify-content-center" style="height: 100vh">
                     <div
-                        class="row form align-items-center justify-content-center"
-                        style="
-                            background-color: #ffac81;
-                            background-image: linear-gradient(315deg, #ffac81 0%, #ff928b 74%);
-                            height: 40vh;
-                            border-radius: 5px;
-                            border: 0.125rem solid rgb(204, 204, 204);
-                        "
+                        class="row form align-items-center justify-content-center shadow-lg"
+                        id="card"
+                        style="background-color: #ffac81; background-image: linear-gradient(315deg, #ffac81 0%, #ff928b 74%); height: 60vh; border-radius: 5px"
                     >
                         <div>
                             <div style="text-align: center">
                                 <span style="font-family: 'Potta One', cursive; color: rgb(255, 255, 255); margin: 30px; font-size: 70px; font-weight: 800">Kviz!</span>
                             </div>
-                            <form>
+                            <form class="text-center">
                                 <input
                                     type="text"
                                     id="gamepin"
-                                    style="
-                                        height: 40px;
-                                        width: 200px;
-                                        border-radius: 5px;
-                                        border-radius: 5px;
-                                        box-shadow: 0 3px 7px rgb(34, 33, 33);
-                                        padding: 20px;
-                                        font-weight: 700;
-                                        border: 0.125rem solid rgb(204, 204, 204);
-                                        margin-bottom: 0.625rem;
-                                        text-align: center;
-                                        font-size: 1.25rem;
-                                    "
+                                    class="form-control mb-2 mt-5 fw-bold shadow-lg"
+                                    style="text-align: center; font-size: 1.25rem"
                                     placeholder="Game Pin"
                                 />
 
@@ -96,16 +125,10 @@
                                         value="Submit"
                                         id="gamepinbtn"
                                         onclick="onhandlesubmit(event)"
+                                        class="btn btn-dark w-100 fw-bold mr-2"
                                         style="
                                             height: 40px;
-                                            border-radius: 5px;
-                                            font-size: 20px;
-                                            font-weight: 700;
-                                            color: rgb(255, 255, 255);
-                                            background-color: rgb(51, 51, 51);
-                                            box-shadow: 0 3px 7px rgb(34, 33, 33);
-                                            width: 200px;
-                                            margin-bottom: 0.625rem;
+
                                             text-align: center;
                                             font-size: 1.25rem;
                                         "
@@ -113,6 +136,7 @@
                                         Enter
                                     </button>
                                 </div>
+                                <span id="error"></span>
                             </form>
                         </div>
                     </div>
@@ -121,25 +145,24 @@
             </div>
         </div>
 
-        <!-- join quiz portion -->
-        Waiting for players to join the room
-        <div class="container shadow mt-5" id="player_waiting_room">
-            Waiting for players to join the room
-            <div class="row flex-wrap mb-1">
-                <div class="col mt-3 ml-2 mb-1" id="player">
-                    <div class="card shadow mt-2 ml-2" style="width: 8rem; height: 12rem">
-                        <img src="/sample.jpeg" class="card-img-top" alt="..." />
+        <!-- waitning room -->
+        <div class="container-fluid p-4 mt-5 h3" id="player_waiting_room">
+            <div class="row justify-content-center align-items-center text-darkfw-bold bg-info rounded-pill" style="height: 8vh">Waiting for players to join the room</div>
+            <div class="row flex-wrap justify-content-strat mb-1" id="row_of_player">
+                <div class="col-md-2 col-sm-6 mt-3 mb-1" id="player" style="display: none">
+                    <div class="card shadow mt-2 ml-2">
+                        <img src="/assets/img/host.jpg" id="imgUser" class="card-img-top" alt="..." />
                         <div class="card-body">
-                            <h6 class="card-title" id="player_name">laxman patil</h6>
+                            <h6 class="card-title fw-bold" id="player_name">Host</h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- NEW QUESTION DISPLAY BLOCK-->
-        <div class="container mt-2" id="questions" style="margin-top: 500px">
-            <div class="d-flex mt-5 justify-content-center row">
-                <div class="col-md-10 col-lg-10">
+        <div class="container mt-2 align-items-center" id="questions">
+            <div class="d-flex mt-5 justify-content-center row" style="width: 100%">
+                <div class="col-md-12 col-lg-12">
                     <div class="border">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row justify-content-between align-items-center mcq">
@@ -153,33 +176,27 @@
                                 <h5 class="mt-1 ml-2" id="question">Which of the following country has largest population?</h5>
                             </div>
 
-                            <div id="question_type">
-                                <div class="ans ml-2">
-                                    <div id="1" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary" role="alert">
+                            <div class="mt-4" id="question_type">
+                                <div class="ans ml-2 mt-1 w-100">
+                                    <div id="1" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary w-100" role="alert">
                                         This is a primary alert—check it out!
                                     </div>
                                 </div>
 
-                                <div class="ans ml-2">
+                                <div class="ans ml-2 mt-1">
                                     <div id="2" name="" value="" onclick="handleClick(this)" class="alert alert-primary" role="alert">This is a primary alert—check it out!</div>
                                 </div>
 
-                                <div class="ans ml-2">
+                                <div class="ans ml-2 mt-1">
                                     <div id="3" name="" onclick="handleClick(this)" value="option 1" class="alert alert-primary" role="alert">
                                         This is a primary alert—check it out!
                                     </div>
                                 </div>
 
-                                <div class="ans ml-2">
+                                <div class="ans ml-2 mt-1">
                                     <div id="4" name="" value="" onclick="handleClick(this)" class="alert alert-primary" role="alert">This is a primary alert—check it out!</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
-                            <button class="btn btn-primary d-flex align-items-center btn-danger" type="button" id="status">&nbsp;question status</button
-                            ><button class="btn btn-primary border-success align-items-center btn-success" id="attempted" type="button">
-                                score : <i class="fa fa-angle-right ml-2"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -198,14 +215,15 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header justify-content-center align-items-center" style="text-align: center">
                         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">;</span>
-                        </button>
                     </div>
-                    <div class="modal-body"><h1 id="temp_timer"></h1></div>
-                    <div class="modal-footer">
+                    <div class="d-flex modal-body align-items-center justify-content-center h1">
+                        <span id="temp_timer"></span>
+                        <i id="right" class="fas fa-check-circle" style="font-size: 70px; color: greenyellow"></i>
+                        <i id="wrong" class="fas fa-times-circle" style="font-size: 70px; color: red"></i>
+                    </div>
+                    <div class="modal-footer" style="visibility: hidden">
                         <button type="button" id="modal_close" class="btn btn-secondary" data-dismiss="modal"></button>
                     </div>
                 </div>
@@ -225,61 +243,76 @@
                 </div>
                 <div class="col-1 d-flex align-items-center "><div style="border:2px solid black;padding: 3px;border-radius: 3px;">adsdsd</div></div>
                 </div> -->
-            <header class="sticky-top">
-                <div class="row bg-dark d-flex align-items-center justify-content-between" style="height: 50px">
-                    <div
-                        class="col-1 justify-content-md-center d-flex"
-                        id="myrank"
-                        style="color: white; margin-left: 20px; border: 2px solid black; padding: 5px; border-radius: 8px"
-                    >
-                        3/10<i style="color: #ffd56b" class="f51e"></i>
+            <!-- <header class="sticky-top">
+                <div class="row bg-dark text-light d-flex align-items-center justify-content-between">
+                    <div class="col-4 h4">
+                        Rank :
+                        <div id="myrank"></div>
                     </div>
-                    <div class="col-2 d-flex justify-content-end" style="margin-right: 20px">
-                        <div class="justify-content-md-center d-flex" style="color: white; border: 2px solid black; padding: 5px; border-radius: 8px; width: 90px" id="myname">
-                            first
-                        </div>
-                        <div
-                            id="mymarks"
-                            class="justify-content-md-center d-flex"
-                            style="margin-left: 20px; border: 2px solid black; padding: 5px; border-radius: 8px; width: 90px; color: white"
+                    <div class="col-4 h4">
+                        Name :
+                        <div id="myname"></div>
+                    </div>
+                    <div class="col-4 h4">
+                        Marks :
+                        <div id="mymarks"></div>
+                    </div>
+                </div>
+            </header> -->
+            <div class="container-fluid" style="margin-top: 50px !important">
+                <div class="text-dark row justify-content-center align-items-center">
+                    <div class="fw-bold text-center rounded-pill bg-info col-4 bg-info">
+                        <span class="h4"><img src="https://img.icons8.com/color/36/000000/guest-male.png" alt="image" /></span>
+                        <br />
+                        <hr />
+                        <span class="h4"> Rank : </span>
+                        <span class="h4" id="myrank"></span> <br />
+                        <span class="h4"> Name : </span>
+                        <span class="h4" id="myname"></span><br />
+                        <span class="h4"> Score : </span>
+                        <span class="h4" id="mymarks"></span><br />
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-2" id="bouncy_topper" style="display: none !important; margin-top: 100px !important">
+                <div class="d-flex justify-content-center align-items-center row">
+                    <div class="col-md-10 col-lg-10 text-light text-center">
+                        <h1>Congratulations</h1>
+                        <br />
+                        <h1>1st Place</h1>
+                        <br />
+                        <div class="display-4" id="ranker"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" style="margin-top: 50px !important" id="leaderboard">
+                <div class="text-dark row justify-content-center align-items-center"><h3 class="fw-bold text-center rounded-pill bg-info col-4 bg-info">LeaderBoard</h3></div>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-7" id="list">
+                        <main class="px-3 row d-flex mt-1 bg-success justify-content-center align-items-center rounded-2" style="opacity: 0.7; font-weight: bolder">
+                            <div class="col-3 justify-content-start d-flex h4">User</div>
+                            <div class="col-3 h4">Rank</div>
+                            <div class="col-3 h4">Name</div>
+                            <div class="col-3 justify-content-end d-flex h4">Score</div>
+                        </main>
+                        <div id="dummy_list"></div>
+                        <main
+                            id="rank_box"
+                            class="px-3 bg-light text-dark mt-1 row d-flex justify-content-center align-items-center rounded-2"
+                            style="display: none !important; background-color: transparent; font-weight: bolder"
                         >
-                            1600 <i style="color: #ffd56b" class="fas fa-coins"></i>
-                        </div>
+                            <div class="col-3 h4"><img src="https://img.icons8.com/color/36/000000/guest-male.png" alt="image" /></div>
+                            <div class="col-3 justify-content-start d-flex h4" id="rank">1</div>
+                            <div class="col-3 h4" id="player_name">aks</div>
+                            <div class="col-3 h4 justify-content-end d-flex" id="totalMarks">10032</div>
+                        </main>
                     </div>
                 </div>
-            </header>
-
-            <div class="d-flex text-center text-white bgg-text">
-                <div class="cover-container d-flex justify-content-center align-items-center w-100 p-3 mx-auto flex-column" style="height: 90vh">
-                    <div>
-                        <div class="row" style="width: 500px">
-                            <div class="col" id="list">
-                                <main class="px-3 row d-flex mt-1 h-50 bg-success justify-content-center align-items-center rounded-2" style="opacity: 0.7; font-weight: bolder">
-                                    <div class="col-4 justify-content-start d-flex">Rank</div>
-                                    <div class="col-4">Name</div>
-                                    <div class="col-4 justify-content-end d-flex">Score</div>
-                                </main>
-                                <div id="dummy_list"></div>
-                                <main
-                                    id="rank_box"
-                                    class="px-3 bg-light text-dark mt-1 h-50 row d-flex justify-content-center align-items-center rounded-2"
-                                    style="display: none !important; background-color: transparent; font-weight: bolder"
-                                >
-                                    <div class="col-4 justify-content-start d-flex" id="rank">1</div>
-
-                                    <div class="col-4" id="player_name">aks</div>
-                                    <div class="col-4 justify-content-end d-flex" id="totalMarks">10032</div>
-                                </main>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <footer class="mt-auto text-white-50">
+            </div>
+            <!-- <footer class="mt-auto text-white-50">
           <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
         </footer>
       </div> -->
-            </div>
         </div>
 
         <!-- loader code -->
@@ -340,7 +373,7 @@
         });
 
         socket.emit('whoami', function (message) {
-            console.log(message);
+            //console.log(message);
         });
 
         async function onhandlesubmit(e) {
@@ -352,7 +385,8 @@
             });
         }
 
-        socket.on('newMessage', function (message) {
+        socket.on('error', function (message) {
+            $('#error').html(message);
             console.log(message);
         });
         /* ready in 5seconds event */
@@ -360,14 +394,18 @@
             ready_in_5sec(ready);
         });
 
-        socket.on('player_joined', function (player, playersInfo) {
-            if (joined) {
-                new_player_joined(player);
-            } else {
-                renderlist(playersInfo);
-                joined = true;
+        socket.on('player_joined', function (player, playersInfo, is_started) {
+            $('#header').hide();
+            $();
+            $('#header').removeClass('d-flex');
+            if (!is_started) {
+                if (joined) {
+                    new_player_joined(player, playersInfo);
+                } else {
+                    renderlist(playersInfo);
+                    joined = true;
+                }
             }
-
             console.log(player);
         });
         socket.on('questions', function (question) {
@@ -380,11 +418,18 @@
         socket.on('leaderboard', function ({ leaderBoardArray }) {
             console.log('this is leader board', leaderBoardArray);
             if (server_is_submitted == undefined) {
-                leaderboard(leaderBoardArray);
+                leaderboard(leaderBoardArray, false);
             } else {
                 response_status(); //nodal co
-                leaderboard(leaderBoardArray);
+                leaderboard(leaderBoardArray, false);
             }
+        });
+        socket.on('finalleaderboard', function ({ leaderBoardArray }, quiz_id) {
+            console.log('this is leader board', leaderBoardArray);
+            leaderboard(leaderBoardArray, true);
+            setTimeout(() => {
+                location.href = '/api/v1/viewliveResponse?id=' + quiz_id;
+            }, 5000);
         });
         socket.on('timer', function (counter) {
             if (counter == 0) {
@@ -393,20 +438,25 @@
             update_timer(counter);
         });
         socket.on('nextQuestion', function (message) {
-            console.log('timer', message);
+            //console.log('timer', message);
         });
 
         socket.on('disconnect', function () {
             // console.log("disconnected from server");
         });
 
-        function new_player_joined(player) {
+        function new_player_joined(player, playersInfo) {
             $('#pin').hide();
             $('#player_waiting_room').show();
-            var player_list = $('#player_waiting_room').children();
+            var player_list = $('#row_of_player');
             var newPlayer = $('#player').clone();
             var name = newPlayer.children().children('.card-body').children();
-            console.log(name);
+            var imgUser = newPlayer.children().children('#imgUser').get(0);
+            //console.log('hello player');
+            newPlayer.get(0).setAttribute('style', 'display:block'); //
+            // console.log(imgUser);
+            imgUser.setAttribute('src', '/assets/img/participant.png');
+            // console.log(name);
             name.html(player.player_name);
             player_list.append(newPlayer);
         }
@@ -416,9 +466,15 @@
             $('#player_waiting_room').show();
             for (let i = 0; i < playersInfo.length; i++) {
                 console.log(playersInfo[i]);
-                let player_list = $('#player_waiting_room').children();
+                let player_list = $('#row_of_player');
                 let newPlayer = $('#player').clone();
+                newPlayer.get(0).setAttribute('style', 'display:block');
+                // console.log(newPlayer.get(0));
                 let name = newPlayer.children().children('.card-body').children();
+                var imgUser = newPlayer.children().children('#imgUser').get(0);
+                // console.log(imgUser);
+
+                imgUser.setAttribute('src', '/assets/img/participant.png');
                 name.html(playersInfo[i]);
                 player_list.append(newPlayer);
             }
@@ -433,7 +489,8 @@
 
         function loadQuestion({ question }) {
             $('#player_waiting_room').hide();
-            console.log('options array', question.options);
+            $('#leaderboard').hide();
+            // console.log('options array', question);
             currect_question_id = question.question_id;
 
             $('#question').html(question.question_statement); //statement
@@ -472,15 +529,18 @@
 
         function ready_in_5sec(ready) {
             $('#exampleModalLabel').html(ready);
-            let counter = 4;
+            $('#right').hide();
+            $('#wrong').hide();
+            let counter = 5;
             $('#modal_open').click();
             let interval = setInterval(() => {
                 $('#temp_timer').html(counter);
-                if (counter < 0) {
+                if (counter == 0) {
                     clearInterval(interval);
                     $('#modal_close').click();
+                } else {
+                    counter--;
                 }
-                counter--;
             }, 900);
         }
 
@@ -491,7 +551,7 @@
                 e.setAttribute('class', 'alert alert-success bg-primary');
                 var statement = $(e).html();
                 var resp_id = e.getAttribute('value');
-                console.log(resp_id);
+                //console.log(resp_id);
                 var timer = $('#timer').html();
                 let response = {
                     option_id: resp_id,
@@ -510,28 +570,42 @@
                     });
                 }, 1000);
 
-                console.log($(e).html());
+                //console.log($(e).html());
             }
         }
 
         function response_status() {
             $('#questions').css('display', 'none');
+            $('#temp_timer').hide();
             let msg = '';
             if (server_is_submitted.status && server_is_submitted.is_correct) {
                 msg = 'congrats your answer is correct';
+                $('#right').show();
             } else if (server_is_submitted.status && server_is_submitted.is_correct === false) {
                 msg = 'sorry your answer is incorrect better luck next time';
+
+                $('#wrong').show();
             } else if (server_is_submitted.status === false) {
                 msg = "Time's up try harder and in time respose";
             }
             $('#exampleModalLabel').html(msg);
             $('#modal_open').click();
             setTimeout(() => {
+                $('#right').hide();
+                $('#wrong').hide();
                 $('#modal_close').click();
-            }, 2000);
+            }, 5000);
         }
 
-        function leaderboard(leader_array) {
+        function leaderboard(leader_array, flag) {
+            if (flag) {
+                $('header').show();
+                $('#bouncy_topper').show();
+                $('#questions').hide();
+                $('#bouncy_topper').css('display', 'block !important');
+                $('#ranker').html(leader_array[0].player_name);
+                $('#bouncy_topper').addClass('animate__animated animate__rubberBand');
+            }
             $('#spinner').hide();
             let list = $('#list');
             list.children('#dummy_list').children().remove();

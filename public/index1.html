@@ -4,11 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href=" https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <title>Document</title>
     </head>
     <body>
         <p>Welcome to websockets</p>
+        <h1 class="animate__animated animate__tada">An animated element</h1>
 
         <button type="button" class="btn btn-primary" onclick="onhandlesubmit(event)">Primary</button>
         <br /><br />
@@ -37,7 +38,7 @@
 
             async function onhandlesubmit(e) {
                 e.preventDefault();
-                socket.emit('generatePin', 174, (response) => {
+                socket.emit('generatePin', 175, (response) => {
                     divElement = document.createElement('div');
                     divElement.innerHTML = `<div>please join the above link to play Quizz </div> <br><input type="text" value ="${response.gamepin}">`;
                     document.body.appendChild(divElement);

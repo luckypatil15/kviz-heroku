@@ -75,7 +75,8 @@ module.exports.getresponses=async (req,res)=>{
                                       username:req.session.user,
                                       fullname:fullname,
                                       results:results,
-                                      quiz_id : req.query.id
+                                      quiz_id : req.query.id,
+                                      profile:fullname
                                        });
    }
       else{
