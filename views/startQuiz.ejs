@@ -225,11 +225,13 @@
                             let input = document.getElementById("fill");
                             var fill =document.getElementById("question_type");
                             var type = document.getElementById("filling").cloneNode(true);
+                            let question = quiz[index].question_statement;
+                            document.getElementById("question").innerHTML =question;
                             var parent = document.getElementById("main_frame");
                             console.log(input);
                             let length = (quiz[index].options[0].option_statement).length;
                             console.log(length);
-                            input.setAttribute("maxlength",length);
+                            //input.setAttribute("maxlength",length);
                             console.log(input);
                             parent.appendChild(type);
 
@@ -254,9 +256,8 @@
                        
                         //console.log("qresponse = "+Qresp);
                    // question_response.correct_statement = quiz[index].options[0].option_statement;
-                    if(response_statement === quiz[index].options[0].option_statement||
-                    response_statement === quiz[index].options[1].option_statement||
-                    response_statement === quiz[index].options[2].option_statement){
+                    if(response_statement === quiz[index].options[0].option_statement
+                    ){
                         correct = true;
                         document.getElementById("status").innerHTML= "correct";
                         document.getElementById("status").setAttribute("class","btn btn-primary d-flex align-items-center btn-success");                       
@@ -504,7 +505,7 @@ label.radio span {
             <h2>Your answer is incorrect </h2>
              
             <div id="filling" >
-                <input type="text"   id="fill"  maxlength='7' >
+                <input type="text"   id="fill"  maxlength='10' >
               <button onclick="handlefillAnswer(this)"> next question</button> 
                 </div>
 

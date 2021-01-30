@@ -51,14 +51,21 @@ module.exports.addResponse = async (req, res) => {
             }
           //  let query1 ="INSERT INTO offline_responses ( participant_id, quiz_id, option_id, question_id, response_statement,  is_correct) VALUES ("+req.body.participant_id},${req.body.quiz_id},${JSON.parse(question_resp[i]).response_answer_id},${JSON.parse(question_resp[i]).question_id},`+stmnt+`,${JSON.parse(question_resp[i]).isCorrect})`;
         var query = `INSERT INTO offline_responses ( participant_id, quiz_id, option_id, question_id, response_statement,  is_correct) VALUES (${req.body.participant_id},${req.body.quiz_id},${JSON.parse(question_resp[i]).response_answer_id},${JSON.parse(question_resp[i]).question_id},'`+stmnt+`',${JSON.parse(question_resp[i]).isCorrect})`;
-        
+        // running procedure
         
         let saveResponse =   await db.sequelize.query(query);
         //console.log(saveResponse);
        
          participant = await db.users.findOne({  // for participant name
             where : {userid :req.body.participant_id }
-        })
+        });
+        // select * from users where userid = req.body.participant_id ;
+        /**
+         * findOne
+         * createOne
+         * update
+         * findall
+         */
         //console.log(JSON.stringify(participant));
 
         var correct_statement;

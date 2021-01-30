@@ -13,7 +13,8 @@ module.exports.removeQuestion = async(req, res) => {
                 "serial_no": srno
             }
         });
-        var query = `call delete_question_details(${quiz_id},${qid.question_id},${srno})`;
+        //var query = `call delete_question_details(${quiz_id},${qid.question_id},${srno})`;
+        var query = `DELETE FROM question where question_id = ${qid.question_id} `;
 
 
         await sequelize.query(query).then(v => console.log(v));

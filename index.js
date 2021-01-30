@@ -51,7 +51,6 @@ const joinQuizRouter = require('./routes/joinQuizRoute.js');
 const addResponseRouter = require('./routes/addResponseRouter');
 const deletequestionRouter = require('./routes/deletequestionRouter');
 const getQuestionsRouter = require('./routes/getQuestionsRouter');
-const joinquizRouter = require('./routes/joinQuizRoute');
 const editQuestionRouter = require('./routes/editquestionRouter')
 const uploadProfileImageRouter = require('./routes/uploadProfileImageRouter')
 const uploadQuizImageRouter = require('./routes/uploadQuizImageRouter');
@@ -64,6 +63,7 @@ const { getQuizByid } = require('./models1/getquiz');
 const { insert_response } = require('./models1/dbresponses');
 const hostingRouter = require('./routes/hostingRoute');
 const viewliveResponseRouter = require('./routes/viewliveResponseRoute');
+const contactusRouter = require('./routes/contactusRoute.js') ;
 let games = new Map();
 
 /*                                                                              
@@ -126,10 +126,7 @@ app.use(passport.session());
 passport.serializeUser(serializeUserCallback);
 
 passport.deserializeUser(deserializeUserCallback);
-app.get('/api/v1/sendfile', (req, res) => {
-    console.log(req.userid, 'abbbb');
-    res.sendFile(path.join(__dirname, '/public', 'index1.html'));
-});
+
 app.use('/', homePageRouter);
 app.use('/api/v1', homePageRouter);
 app.use('/api/v1/signup', SignupRouter);
@@ -167,6 +164,8 @@ app.use('/api/v1/viewResponses',viewResponseRouter);//viewResponses
 app.use('/api/v1/download',downloadRouter);
 app.use('/api/v1/preparetohost',hostingRouter);
 app.use('/api/v1/viewliveResponse',viewliveResponseRouter);
+
+app.use('/api/v1/contactus',contactusRouter);
 const io = require('socket.io')(server);
 
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);

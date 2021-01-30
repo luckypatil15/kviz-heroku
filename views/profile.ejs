@@ -53,13 +53,7 @@
                                 <div class="col-lg-3 order-lg-2">
                                     <div class="card-profile-image">
                                         <% if (profile.user_image == null || profile.user_image == '' || profile.user_image == undefined) { %>
-                                        <img
-                                            onclick="callModal()"
-                                            src="/assets/img/team-placeholder.png"
-                                            id="profileImage"
-                                            style="height: 25vh; width: 11vw"
-                                            class="rounded-circle"
-                                        />
+                                        <img onclick="callModal()" src="/img/team-placeholder.png" id="profileImage" style="height: 25vh; width: 11vw" class="rounded-circle" />
                                         <% } else { %>
                                         <img
                                             onclick="callModal()"

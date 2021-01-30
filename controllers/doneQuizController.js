@@ -28,6 +28,7 @@ module.exports.completeQuiz = function (req, res) {
 module.exports.completed = function(req, res) {
 
     let obj;
+    console.log(req.body.overall_timer);
     var update_timer = req.body.overall_timer;
     var present_date = req.body.present_date;
     var quiz_id = req.session.quizzid.quiz_id;
